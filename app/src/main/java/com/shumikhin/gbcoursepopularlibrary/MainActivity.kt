@@ -16,22 +16,37 @@ class MainActivity : AppCompatActivity(), MainView {
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb?.root)
 
-        val listener = View.OnClickListener {
-            presenter.counterClick(it.id)
-        }
+//Как Вариант с индексом
+//        vb?.btnCounter1?.setOnClickListener{presenter.counterClick(0)}
+//        vb?.btnCounter2?.setOnClickListener{presenter.counterClick(1)}
+//        vb?.btnCounter3?.setOnClickListener{presenter.counterClick(2)}
 
-        vb?.btnCounter1?.setOnClickListener(listener)
-        vb?.btnCounter2?.setOnClickListener(listener)
-        vb?.btnCounter3?.setOnClickListener(listener)
+        vb?.btnCounter1?.setOnClickListener {presenter.counterClick0()}
+        vb?.btnCounter2?.setOnClickListener {presenter.counterClick1()}
+        vb?.btnCounter3?.setOnClickListener {presenter.counterClick2()}
+
     }
 
-    //Подсказка к ПЗ: поделить на 3 отдельные функции и избавиться от index
+    //Как Вариант с индексом
     override fun setButtonText(index: Int, text: String) {
         when(index){
             0 -> vb?.btnCounter1?.text = text
             1 -> vb?.btnCounter2?.text = text
             2 -> vb?.btnCounter3?.text = text
         }
+
+    }
+
+    override fun setButtonTextC0(text: String) {
+        vb?.btnCounter1?.text = text
+    }
+
+    override fun setButtonTextC1(text: String) {
+        vb?.btnCounter2?.text = text
+    }
+
+    override fun setButtonTextC2(text: String) {
+        vb?.btnCounter3?.text = text
     }
 
 }
