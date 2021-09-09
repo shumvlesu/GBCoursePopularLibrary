@@ -14,15 +14,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb?.root)
+
         vb?.btnCounter1?.setOnClickListener {
             vb?.btnCounter1?.text = (++counters[0]).toString()
         }
+
         vb?.btnCounter2?.setOnClickListener {
             vb?.btnCounter2?.text = (++counters[1]).toString()
         }
+
         vb?.btnCounter3?.setOnClickListener {
             vb?.btnCounter3?.text = (++counters[2]).toString()
         }
+
         initViews()
     }
 
