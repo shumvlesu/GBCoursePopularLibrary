@@ -5,11 +5,21 @@ import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
-class MainActivity : AppCompatActivity(), MainView {
+//class MainActivity : AppCompatActivity(), MainView {
+//Заменяем AppCompatActivity(), подключая активити к мокси MvpAppCompatActivity()
+class MainActivity : MvpAppCompatActivity(), MainView {
 
     private var vb: ActivityMainBinding? = null
-    val presenter = MainPresenter(this)
+
+    //Подключаем презентр в активити к мокси тоже
+    //val presenter = MainPresenter(this)
+    //Теперь при перестроении активити (повороте экрана например) презентер снова присоеденится к активити или фрагменту
+    private val presenter by moxyPresenter {
+        MainPresenter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

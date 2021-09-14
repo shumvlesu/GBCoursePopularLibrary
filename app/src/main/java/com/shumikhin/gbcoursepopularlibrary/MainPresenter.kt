@@ -1,5 +1,8 @@
 package com.shumikhin.gbcoursepopularlibrary
 
+import androidx.annotation.IntRange
+import moxy.MvpPresenter
+
 //Логику приложения, вытащим в презентер
 //Формируем ссылку на модель и метод для вызова из View при клике на кнопку, куда отдаётся
 //id, и где происходит вся логика. Для этого получаем у модели следующее значение по индексу
@@ -9,47 +12,34 @@ package com.shumikhin.gbcoursepopularlibrary
 //презентере.
 //В чём ошибка: в презентере упоминается класс R, относящийся к AndroidSDK, но быть его
 //здесь не должно. Исправление этой ошибки будет практическим заданием к уроку.
-class MainPresenter(val view: MainView) {
+
+//Подключаем презентр к мокси -  MvpPresenter<MainView>()
+// где MainView это наша вьюха (класс MainView)
+class MainPresenter : MvpPresenter<MainView>(){
 
     val model = CountersModel()
 
-//Архитектурная ошибка. В качестве практического задания -- исправить
-//    fun counterClick(id: Int) {
-//        when (id) {
-//            R.id.btn_counter1 -> {
-//                val nextValue = model.next(0)
-//                view.setButtonText(0, nextValue.toString())
-//            }
-//            R.id.btn_counter2 -> {
-//                val nextValue = model.next(1)
-//                view.setButtonText(1, nextValue.toString())
-//            }
-//            R.id.btn_counter3 -> {
-//                val nextValue = model.next(2)
-//                view.setButtonText(2, nextValue.toString())
-//            }
-//        }
-//    }
-
     //Как Вариант с индексом
-    fun counterClick(id: Int) {
+    fun counterClick(@IntRange(from = 0, to = 2) id: Int) {
         val nextValue = model.next(id)
-        view.setButtonText(id, nextValue.toString())
+        //view.setButtonText(id, nextValue.toString())
+        //Заменяем view на viewState так как мы подключили мокси
+        viewState.setButtonText(id, nextValue.toString())
     }
 
     fun counterClick0() {
         val nextValue = model.next(0)
-        view.setButtonTextC0(nextValue.toString())
+        viewState.setButtonTextC0(nextValue.toString())
     }
 
     fun counterClick1() {
         val nextValue = model.next(1)
-        view.setButtonTextC1(nextValue.toString())
+        viewState.setButtonTextC1(nextValue.toString())
     }
 
     fun counterClick2() {
         val nextValue = model.next(2)
-        view.setButtonTextC2(nextValue.toString())
+        viewState.setButtonTextC2(nextValue.toString())
     }
 
 }
