@@ -1,9 +1,6 @@
 package com.shumikhin.gbcoursepopularlibrary
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -31,15 +28,15 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 //        vb?.btnCounter2?.setOnClickListener{presenter.counterClick(1)}
 //        vb?.btnCounter3?.setOnClickListener{presenter.counterClick(2)}
 
-        vb?.btnCounter1?.setOnClickListener {presenter.counterClick0()}
-        vb?.btnCounter2?.setOnClickListener {presenter.counterClick1()}
-        vb?.btnCounter3?.setOnClickListener {presenter.counterClick2()}
+        vb?.btnCounter1?.setOnClickListener { presenter.counterClick0() }
+        vb?.btnCounter2?.setOnClickListener { presenter.counterClick1() }
+        vb?.btnCounter3?.setOnClickListener { presenter.counterClick2() }
 
     }
 
     //Как Вариант с индексом
     override fun setButtonText(index: Int, text: String) {
-        when(index){
+        when (index) {
             0 -> vb?.btnCounter1?.text = text
             1 -> vb?.btnCounter2?.text = text
             2 -> vb?.btnCounter3?.text = text
