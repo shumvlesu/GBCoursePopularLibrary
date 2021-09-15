@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    //Добавляем для модели GithubUser
+    id 'kotlin-parcelize'
 }
 
 //Для Moxy
@@ -55,4 +57,11 @@ dependencies {
     implementation "com.github.moxy-community:moxy-ktx:2.1.2"
     implementation "com.github.moxy-community:moxy-androidx:2.1.2"
     //
+
+    //cicerone
+    implementation 'com.github.terrakok:cicerone:6.6'
+
+    //подключим в проект RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
 }

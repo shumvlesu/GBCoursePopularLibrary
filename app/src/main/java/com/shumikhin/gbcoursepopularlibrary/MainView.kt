@@ -10,8 +10,9 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 // добавить ее в конец очереди и удалить все ее предыдущие экземпляры
 @AddToEndSingle
 interface MainView: MvpView  {
-    fun setButtonText(index: Int, text: String)
-    fun setButtonTextC0(text: String)
-    fun setButtonTextC1(text: String)
-    fun setButtonTextC2(text: String)
+    //Так как всё, что появится на экране — просто список, интерфейс включает всего два метода:
+    //● init() — для первичной инициализации списка, который мы будем вызывать при присоединении View к Presenter;
+    //● updateList() — для обновления содержимого списка.
+    fun init()
+    fun updateList()
 }

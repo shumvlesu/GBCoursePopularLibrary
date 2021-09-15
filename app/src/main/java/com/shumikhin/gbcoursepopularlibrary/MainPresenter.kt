@@ -1,45 +1,53 @@
 package com.shumikhin.gbcoursepopularlibrary
 
-import androidx.annotation.IntRange
+import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.presentation.IUserListPresenter
+import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 import moxy.MvpPresenter
 
-//Логику приложения, вытащим в презентер
-//Формируем ссылку на модель и метод для вызова из View при клике на кнопку, куда отдаётся
-//id, и где происходит вся логика. Для этого получаем у модели следующее значение по индексу
-//и командуем view об установке текста соответствующей кнопке. Как уже упоминалось,
-//относительно view подобная работа с кнопками по индексам считается неправильной. Однако
-//это часть специально заложенной архитектурной ошибки, о которой говорит комментарий в
-//презентере.
-//В чём ошибка: в презентере упоминается класс R, относящийся к AndroidSDK, но быть его
-//здесь не должно. Исправление этой ошибки будет практическим заданием к уроку.
+//Мы реализовали интерфейс IUserListPresenter классом UsersListPresenter, где и содержатся
+//данные и логика по наполнению View. Сюда же делегируется получение количества элементов списка
+//через getCount(). В остальном всё просто:
+//● при первом присоединении View вызываем метод init(), в котором напишем все операции по инициализации View;
+//● затем получаем данные из репозитория;
+//● отдаём их презентеру списка;
+//● командуем View обновить список.
+//Далее оставляем заготовку слушателя клика
+class MainPresenter(val usersRepo: GithubUsersRepo) : MvpPresenter<MainView>() {
 
-//Подключаем презентр к мокси -  MvpPresenter<MainView>()
-// где MainView это наша вьюха (класс MainView)
-class MainPresenter : MvpPresenter<MainView>(){
+    class UsersListPresenter : IUserListPresenter {
 
-    val model = CountersModel()
+        val users = mutableListOf<GithubUser>()
 
-    //Как Вариант с индексом
-    fun counterClick(@IntRange(from = 0, to = 2) id: Int) {
-        val nextValue = model.next(id)
-        //view.setButtonText(id, nextValue.toString())
-        //Заменяем view на viewState так как мы подключили мокси
-        viewState.setButtonText(id, nextValue.toString())
+        override var itemClickListener: ((UserItemView) -> Unit)? = null
+
+        override fun getCount() = users.size
+
+        override fun bindView(view: UserItemView) {
+            val user = users[view.pos]
+            view.setLogin(user.login)
+        }
+
     }
 
-    fun counterClick0() {
-        val nextValue = model.next(0)
-        viewState.setButtonTextC0(nextValue.toString())
+    val usersListPresenter = UsersListPresenter()
+
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        viewState.init()
+        loadData()
+
+        usersListPresenter.itemClickListener = { itemView ->
+            //TODO: переход на экран пользователя
+        }
+
     }
 
-    fun counterClick1() {
-        val nextValue = model.next(1)
-        viewState.setButtonTextC1(nextValue.toString())
-    }
-
-    fun counterClick2() {
-        val nextValue = model.next(2)
-        viewState.setButtonTextC2(nextValue.toString())
+    fun loadData() {
+        val users = usersRepo.getUsers()
+        usersListPresenter.users.addAll(users)
+        viewState.updateList()
     }
 
 }
