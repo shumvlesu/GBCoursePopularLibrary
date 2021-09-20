@@ -17,9 +17,12 @@ interface IListPresenter <V : IItemView> {
     //Здесь V представляет собой тип View для строки списка, а itemClickListener — функция,
     //принимающая на вход эту самую View. Таким образом, при обработке клика мы получаем от View
     //позицию и находим требуемый элемент.
+
+    //По сути продублировали логику адаптера ресайквью
     var itemClickListener: ((V) -> Unit)?
     fun bindView(view: V)
     fun getCount(): Int
 }
 
+//А этот интерфейс наследуется от того что выше
 interface IUserListPresenter : IListPresenter<UserItemView>
