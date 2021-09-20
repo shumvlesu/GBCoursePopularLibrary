@@ -16,8 +16,7 @@ import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 //nullable-значения функционального типа. Эта функция есть у любого значения функционального типа,
 //и её вызов вызывает саму функцию, которая и считается этим значением. Проще говоря,
 //presenter.itemClickListener?.invoke(holder) вызовет itemClickListener, если он не равен null.
-class UsersRVAdapter(val presenter: IUserListPresenter) :
-    RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
+class UsersRVAdapter(val presenter: IUserListPresenter) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemUserBinding.inflate(
