@@ -18,6 +18,7 @@ import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 //presenter.itemClickListener?.invoke(holder) вызовет itemClickListener, если он не равен null.
 class UsersRVAdapter(private val presenter: IUserListPresenter) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
+    //кроме создания самой вьюхи все остальное вешаем на адаптер
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     ).apply {
@@ -32,7 +33,7 @@ class UsersRVAdapter(private val presenter: IUserListPresenter) : RecyclerView.A
 
     inner class ViewHolder(val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
         UserItemView {
-            override var pos = -1
+            override var pos = -1 //-1 потому что у нас еще данных из презентера нет, это просто такая заглушка
             override fun setLogin(text: String) = with(vb) {
             tvLogin.text = text
             }
