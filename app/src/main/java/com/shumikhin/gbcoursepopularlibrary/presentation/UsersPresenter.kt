@@ -47,6 +47,7 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) : MvpPr
         //инициализируем клик
         usersListPresenter.itemClickListener = { itemView ->
             //TODO: переход на экран пользователя
+            //Здесь обращаемся
         }
 
     }
