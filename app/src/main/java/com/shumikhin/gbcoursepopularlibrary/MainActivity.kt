@@ -1,10 +1,10 @@
 package com.shumikhin.gbcoursepopularlibrary
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
-import com.shumikhin.gbcoursepopularlibrary.view.ui.UsersRVAdapter
+import com.shumikhin.gbcoursepopularlibrary.screens.AndroidScreens
+import com.shumikhin.gbcoursepopularlibrary.view.ui.BackButtonListener
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 
@@ -12,9 +12,16 @@ import moxy.ktx.moxyPresenter
 //Заменяем AppCompatActivity(), подключая активити к мокси MvpAppCompatActivity()
 class MainActivity : MvpAppCompatActivity(), MainView {
 
-    private val presenter by moxyPresenter { MainPresenter(GithubUsersRepo()) }
-    private var adapter: UsersRVAdapter? = null
     private var vb: ActivityMainBinding? = null
+    //navigator берем из встроеного класса cicerone
+    val navigator = AppNavigator(this, R.id.container)
+
+    private val presenter by moxyPresenter {
+        MainPresenter(
+            App.instance.router,
+            AndroidScreens()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,16 +29,24 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         setContentView(vb?.root)
     }
 
-    //В функции init() инициализируем адаптер и передаём туда Presenter
-    //списка, а в функции updateList() командуем адаптеру обновить список.
-    override fun init() {
-        vb?.rvUsers?.layoutManager = LinearLayoutManager(this)
-        adapter = UsersRVAdapter(presenter.usersListPresenter)
-        vb?.rvUsers?.adapter = adapter
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        App.instance.navigatorHolder.setNavigator(navigator)
     }
 
-    override fun updateList() {
-        adapter?.notifyDataSetChanged()
+    override fun onPause() {
+        super.onPause()
+        App.instance.navigatorHolder.removeNavigator()
+    }
+
+    //из активити отсележиваем нажатие навигации назад
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            if (it is BackButtonListener && it.backPressed()) {
+                return
+            }
+        }
+        presenter.backClicked()
     }
 
 }
