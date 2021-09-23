@@ -3,6 +3,7 @@ package com.shumikhin.gbcoursepopularlibrary.presentation
 import com.github.terrakok.cicerone.Router
 import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
 import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.screens.AndroidScreens
 import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UsersView
 import moxy.MvpPresenter
@@ -47,7 +48,8 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) : MvpPr
         //инициализируем клик
         usersListPresenter.itemClickListener = { itemView ->
             //TODO: переход на экран пользователя
-            //Здесь обращаемся
+            val user = usersListPresenter.users[itemView.pos]
+            router.navigateTo(AndroidScreens().details(GithubUser(user.login)))
         }
 
     }
