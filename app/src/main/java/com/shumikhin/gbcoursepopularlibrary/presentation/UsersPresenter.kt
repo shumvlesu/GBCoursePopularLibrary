@@ -47,7 +47,7 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) : MvpPr
         loadData()
         //инициализируем клик
         usersListPresenter.itemClickListener = { itemView ->
-            //TODO: переход на экран пользователя
+            //переход на экран пользователя
             val user = usersListPresenter.users[itemView.pos]
             router.navigateTo(AndroidScreens().details(GithubUser(user.login)))
         }
