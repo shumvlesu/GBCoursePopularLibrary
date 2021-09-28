@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         _vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb.root)
 
-        Creation().exec()
+        //Creation().exec()
         CreationTeacherExample().init()
     }
 }
