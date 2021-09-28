@@ -1,9 +1,8 @@
 package com.shumikhin.gbcoursepopularlibrary
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
-import com.shumikhin.gbcoursepopularlibrary.rx.Creation
 import com.shumikhin.gbcoursepopularlibrary.rx.CreationTeacherExample
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         _vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb.root)
 
-        //Creation().exec()
         CreationTeacherExample().init()
     }
 }
