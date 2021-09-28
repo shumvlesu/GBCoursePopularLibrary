@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
 import com.shumikhin.gbcoursepopularlibrary.rx.Creation
+import com.shumikhin.gbcoursepopularlibrary.rx.CreationTeacherExample
 
 class MainActivity : AppCompatActivity() {
     private var _vb: ActivityMainBinding? = null
@@ -18,5 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(vb.root)
 
         Creation().exec()
+        CreationTeacherExample().init()
     }
 }
