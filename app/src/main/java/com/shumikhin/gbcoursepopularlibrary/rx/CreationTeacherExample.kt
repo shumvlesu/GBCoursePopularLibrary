@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.kotlin.toObservable
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -27,9 +28,16 @@ class CreationTeacherExample {
             return Observable.just("1", "2", "3", "3")
         }
 
+        //на RxJava
         fun getFromIterableObserver(): Observable<String> {
             //похож на just, но в него передаётся не набор, а коллекция элементов
             return Observable.fromIterable(arrayListOf("1", "2", "3"))
+        }
+
+        //Аналог на RxKotlin
+        fun getFromIterableObserverKotlin(): Observable<String> {
+            //похож на just, но в него передаётся не набор, а коллекция элементов
+            return arrayListOf("1", "2", "3").toObservable()
         }
 
         fun getIntervalObserver(): Observable<Long> {
@@ -129,6 +137,10 @@ class CreationTeacherExample {
         //2021-09-29 14:00:38.556 10108-10108/com.shumikhin.gbcoursepopularlibrary D/TAG: onComplete
 
     }
+
+
+
+
 
     /** Потребитель данных */
     class Consumer(private val producer: Producer) {
