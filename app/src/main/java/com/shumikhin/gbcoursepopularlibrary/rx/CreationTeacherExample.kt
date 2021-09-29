@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.functions.BiFunction
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -20,6 +21,10 @@ class CreationTeacherExample {
         fun getJustObservable(): @NonNull Observable<String> {
             //В оператор just передаётся набор элементов
             return Observable.just("a", "b", "c", "d", "e")
+        }
+
+        fun getJustObservable2(): @NonNull Observable<String> {
+            return Observable.just("1", "2", "3", "3")
         }
 
         fun getFromIterableObserver(): Observable<String> {
@@ -92,18 +97,7 @@ class CreationTeacherExample {
         }
 
 
-
-
-
-
-//        fun getJustObservable(): @NonNull Observable<String> {
-//            return Observable.just("1", "2", "1", "4")
-//        }
-
-//        fun kotlinToObservable(): Observable<String> {
-//            return arrayListOf("1", "2", "3").toObservable()
-//        }
-
+        //create используя излучаетль (emitter) вызвает разные методы у подписчиков: onNext, onError, onComplete.
         fun getCreateObservable() = Observable.create<String> { emitter ->
             try {
                 for (i in 0..10) {
@@ -119,6 +113,20 @@ class CreationTeacherExample {
                 emitter.onError(e)
             }
         }
+        //2021-09-29 13:40:57.416 9535-9535/com.shumikhin.gbcoursepopularlibrary D/TAG: +++++++++++getRangeObservable()
+        //2021-09-29 13:40:57.417 9535-9535/com.shumikhin.gbcoursepopularlibrary D/TAG: onSubscribe
+        //2021-09-29 13:40:57.650 9535-9535/com.shumikhin.gbcoursepopularlibrary D/TAG: onError
+        //2021-09-29 13:41:02.152 9590-9590/com.shumikhin.gbcoursepopularlibrary D/TAG: +++++++++++getRangeObservable()
+        //2021-09-29 13:41:02.153 9590-9590/com.shumikhin.gbcoursepopularlibrary D/TAG: onSubscribe
+        //2021-09-29 13:41:02.528 9590-9590/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: Success
+        //2021-09-29 13:41:02.653 9590-9590/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: Success
+        //2021-09-29 13:41:03.348 9590-9590/com.shumikhin.gbcoursepopularlibrary D/TAG: onError
+        //
+        // с onErrorComplete() будет onComplete если произошла ошибка
+        //2021-09-29 14:00:37.803 10108-10108/com.shumikhin.gbcoursepopularlibrary D/TAG: +++++++++++getRangeObservable()
+        //2021-09-29 14:00:37.815 10108-10108/com.shumikhin.gbcoursepopularlibrary D/TAG: onSubscribe
+        //2021-09-29 14:00:38.130 10108-10108/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: Success
+        //2021-09-29 14:00:38.556 10108-10108/com.shumikhin.gbcoursepopularlibrary D/TAG: onComplete
 
     }
 
@@ -189,9 +197,101 @@ class CreationTeacherExample {
             //Log.d(TAG, "+++++++++++getRangeObservable()")
             //producer.getRangeObservable().subscribe(stringObserver)
 
-            Log.d(TAG, "+++++++++++getRangeObservable()")
-            producer.getFromCallableObservable().subscribe(stringObserver)
+            //Log.d(TAG, "+++++++++++getRangeObservable()")
+            //producer.getFromCallableObservable().subscribe(stringObserver)
 
+            //Log.d(TAG, "+++++++++++getRangeObservable()")
+            ////onErrorComplete говортит о том что если у нас ошибка то мы все равно комплитимся
+            //producer.getCreateObservable().onErrorComplete().subscribe(stringObserver)
+
+
+            //**************************операторы манипуляции над потоком****************//
+
+            //Log.d(TAG, "+++++++++++getJustObservable2()")
+            //Оператор take(count) берёт первые count элементов цепочки
+            //takeLast - тоже самое, но последних
+            //producer.getJustObservable2()
+            //    .take(2)
+            //    .subscribe(stringObserver)
+
+
+            //Один из ключевых операторов — map. Этот оператор преобразует элементы цепочки согласно
+            //переданному ему правилу. Чаще всего это какая-нибудь лямбда.
+            //producer.getIntervalObserver()
+            //    .map{ "Количество тиков $it" }
+            //    .subscribe(stringObserver)
+
+
+            //Оператор distinct, как следует из его названия, отсеивает дубликаты.
+            //producer.getJustObservable2()
+            //    .distinct()
+            //    .subscribe(stringObserver)
+
+
+            //Суть оператора — в его названии. Отфильтруем все строки, представляющие числа, меньшие или
+            //равные единице.
+            //producer.getJustObservable2()
+            //    .filter { it.toString() == "3" } // только 3'ки
+            //    .subscribe(stringObserver)
+
+
+            //Один из операторов объединения. Сливает источники
+            //Так как у нас довольно простой пример, все значения выдаются последовательно. Однако на самом
+            //деле порядок элементов не гарантируется, и элементы второго источника могут выдаваться между
+            //элементами первого.
+            //producer.getJustObservable2()
+            //    .mergeWith(producer.getJustObservable())
+            //    .subscribe(stringObserver)
+
+
+            //Оператор flatMap похож на map, также применяет функцию к каждому излучаемому элементу, но эта
+            //функция возвращает Obsevable. flatMap из каждого элемента создаёт новый источник, после чего
+            //выполняет слияние этих источников, похожее на применение над ними оператора merge.
+            //producer.getJustObservable2()
+            //    .flatMap {
+            //        val delay = Random.nextInt(1000).toLong()
+            //        return@flatMap Observable.just(it + "x", it + "y").delay(delay, TimeUnit.MILLISECONDS)
+            //    }
+            //    .subscribe(stringObserver)
+
+            //return@flatMap Observable.just(it + "x").delay(delay, TimeUnit.MILLISECONDS) - результат:
+            //2021-09-29 16:05:08.982 11906-11906/com.shumikhin.gbcoursepopularlibrary D/TAG: onSubscribe
+            //2й элемент соединен flatMap и помещен впереди 1го
+            //2021-09-29 16:05:09.157 11906-11939/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 2x
+            //2021-09-29 16:05:09.218 11906-11937/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 1x
+            //2021-09-29 16:05:09.493 11906-11937/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 3x
+            //2021-09-29 16:05:09.914 11906-11939/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 3x
+            //2021-09-29 16:05:09.914 11906-11939/com.shumikhin.gbcoursepopularlibrary D/TAG: onComplete
+
+            //return@flatMap Observable.just(it + "x", it + "y").delay(delay, TimeUnit.MILLISECONDS) - результат:
+            //2021-09-29 16:09:02.315 12054-12054/com.shumikhin.gbcoursepopularlibrary D/TAG: onSubscribe
+            //2021-09-29 16:09:02.338 12054-12082/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 3x
+            //2021-09-29 16:09:02.338 12054-12082/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 3y
+            //2021-09-29 16:09:02.605 12054-12081/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 1x
+            //2021-09-29 16:09:02.605 12054-12081/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 1y
+            //2021-09-29 16:09:02.978 12054-12081/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 3x
+            //2021-09-29 16:09:02.978 12054-12081/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 3y
+            //2021-09-29 16:09:03.267 12054-12082/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 2x
+            //2021-09-29 16:09:03.267 12054-12082/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 2y
+            //2021-09-29 16:09:03.267 12054-12082/com.shumikhin.gbcoursepopularlibrary D/TAG: onComplete
+
+
+
+            //zip - соединяет несколько потоков данных
+            val observable = producer.getJustObservable()
+            val observable2 = producer.getJustObservable2()
+                Observable.zip(observable,observable2, BiFunction { o1, o2 ->
+                    o1+o2 //Хотим склеить 2а потока при помощи BiFunction()
+                })
+                .subscribe(stringObserver)
+
+            //Обращаю внимание на то что один поток был длиннее, но выполнилось по короткому.
+            //2021-09-29 16:33:41.633 12578-12578/com.shumikhin.gbcoursepopularlibrary D/TAG: onSubscribe
+            //2021-09-29 16:33:41.638 12578-12578/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: a1
+            //2021-09-29 16:33:41.639 12578-12578/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: b2
+            //2021-09-29 16:33:41.645 12578-12578/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: c3
+            //2021-09-29 16:33:41.646 12578-12578/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: d3
+            //2021-09-29 16:33:41.647 12578-12578/com.shumikhin.gbcoursepopularlibrary D/TAG: onComplete
 
 
 
