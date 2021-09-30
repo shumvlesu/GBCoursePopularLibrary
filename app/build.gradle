@@ -65,4 +65,13 @@ dependencies {
     //подключим в проект RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
+
+    //RxJava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
+
+    //RxKotlin
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
+
+
 }
