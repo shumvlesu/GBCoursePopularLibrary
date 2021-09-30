@@ -4,20 +4,31 @@ import kotlin.random.Random
 
 class Sources {
 
-    fun exec() {
-        Consumer(Producer()).exec()
+    fun init() {
+        Consumer(Producer()).execute()
     }
 
+    /** Производитель данных */
     class Producer {
+
         fun randomResultOperation(): Boolean {
             Thread.sleep(Random.nextLong(1000))
             return listOf(true, false, true)[Random.nextInt(2)]
         }
+
     }
 
+    /** Потребитель данных */
     class Consumer(val producer: Producer) {
-        fun exec() {
+
+        //val compositeDisposable = CompositeDisposable()
+
+        private val TAG = "RxJava"
+
+        /** Выполнение «потребления» */
+        fun execute() {
         }
+
     }
 
 }
