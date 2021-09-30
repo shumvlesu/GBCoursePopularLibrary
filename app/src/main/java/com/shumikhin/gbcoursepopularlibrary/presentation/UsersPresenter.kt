@@ -54,11 +54,12 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) : MvpPr
 
     }
 
-    //загружаем даннные
-    fun loadData() {
-        val users = usersRepo.getUsers()
-        usersListPresenter.users.addAll(users)
-        viewState.updateList()
+    //загружаем даннные при помощи RxJava
+    private fun loadData() {
+        usersRepo.getUsers().subscribe {
+            usersListPresenter.users.addAll(listOf(it))
+            viewState.updateList()
+        }
     }
 
     //Для обработки нажатия клавиши «Назад» добавляем функцию backPressed(). Она возвращает

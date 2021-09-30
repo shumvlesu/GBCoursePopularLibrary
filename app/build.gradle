@@ -71,7 +71,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
 
     //RxKotlin
-    implementation("io.reactivex:rxkotlin:3.0.1")
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
 
 
 }

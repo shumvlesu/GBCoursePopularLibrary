@@ -19,7 +19,7 @@ class GithubUsersRepo {
 //        return repositories
 //    }
 
-    fun getUsers(): Observable<List<Any>> {
+    fun getUsers(): Observable<GithubUser> {
         //fromIterable, реализованый RxKotlin, похож на just, но в него передаётся не набор, а коллекция элементов
         return repositories.toObservable()
     }
