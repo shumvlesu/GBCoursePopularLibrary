@@ -1,5 +1,8 @@
 package com.shumikhin.gbcoursepopularlibrary.model
 
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.toObservable
+
 //репозиторий с фиктивными данными, которым будем пользоваться, пока не
 //реализуем получение данных из сети
 class GithubUsersRepo {
@@ -12,8 +15,13 @@ class GithubUsersRepo {
         GithubUser("login5")
     )
 
-    fun getUsers() : List<GithubUser> {
-        return repositories
+//    fun getUsers() : List<GithubUser> {
+//        return repositories
+//    }
+
+    fun getUsers(): Observable<List<Any>> {
+        //fromIterable, реализованый RxKotlin, похож на just, но в него передаётся не набор, а коллекция элементов
+        return repositories.toObservable()
     }
 
 }
