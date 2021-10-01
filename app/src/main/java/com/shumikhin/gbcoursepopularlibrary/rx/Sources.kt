@@ -2,6 +2,7 @@ package com.shumikhin.gbcoursepopularlibrary.rx
 
 import android.util.Log
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import kotlin.random.Random
 
@@ -58,7 +59,23 @@ class Sources {
             }
         }
 
-
+        //Maybe
+        //Maybe подходит, если нас устраивает как наличие значения, так и его отсутствие.
+        //Например, при обработке авторизации с возможностью гостевого доступа. В этом случае нас устроит
+        //и наличие, и отсутствие авторизованного пользователя.
+        //Можно сказать, что он где-то между Completable и Single. Его MaybeObserver, помимо onError и
+        //onSubscribe, имеет методы onSuccess и onComplete. Оба считаются «терминальными», и,
+        //соответственно, взаимоисключающими. Если значение есть, то вызывается первый, наоборот — второй
+        fun maybe() = Maybe.create<String> { emitter ->
+            randomResultOperation().let {
+                if (it) {
+                    emitter.onSuccess("Success: $it")
+                } else {
+                    emitter.onComplete()
+                    return@create
+                }
+            }
+        }
 
 
 
@@ -84,16 +101,31 @@ class Sources {
 //            //**** E/TAG: onError: Пришёл false
 
 
-            //подписка на single()
-            producer.single()
-                .map { it + it } //мапой предварительно сливаем
+//            //подписка на single()
+//            producer.single()
+//                .map { it + it } //мапой предварительно сливаем
+//                .subscribe({ s ->
+//                    Log.d(TAG,"onSuccess: $s")
+//                }, {
+//                    Log.e(TAG,"onError: ${it.message}")
+//                })
+//            //Пример выполнения:
+//            // **** D/TAG: onSuccess: Привет!Привет!
+
+
+            //подписка на maybe()
+            //Если случайный результат — true, то возвращаем onSuccess, в противном случае — onComplete.
+            //Нетрудно представить, например, функцию получения текущего пользователя на месте
+            //randomResultOperation.
+            producer.maybe()
                 .subscribe({ s ->
                     Log.d(TAG,"onSuccess: $s")
                 }, {
                     Log.e(TAG,"onError: ${it.message}")
+                }, {
+                    Log.d(TAG,"onComplete")
                 })
-            //Пример выполнения:
-            // **** D/TAG: onSuccess: Привет!Привет!
+
 
 
 
