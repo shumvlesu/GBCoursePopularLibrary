@@ -139,9 +139,6 @@ class CreationTeacherExample {
     }
 
 
-
-
-
     /** Потребитель данных */
     class Consumer(private val producer: Producer) {
 
