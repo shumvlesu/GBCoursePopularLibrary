@@ -105,6 +105,19 @@ class Sources {
             //.publish()
             .replay()
 
+        //refCount()
+        //Этот метод сделает из ConnectableObservable Observable, который начнёт свою работу, как только
+        //появится первый подписчик
+        //Здесь нет метода connect(), так как класс ConnectableObservable, полученный методом publish(),
+        //обёрнут обратно в класс Observable, благодаря использованию метода refCount(). При такой
+        //конструкции мы получаем горячий Observable, который ведёт себя как холодный. Тем не менее это
+        //именно горячий Observable, так как он будет раздавать одни и те же данные всем подписчикам, а не
+        //стартовать работу заново для каждого из них.
+        fun hotObservableRefCount() = Observable.interval(1, TimeUnit.SECONDS)
+                .publish()
+                .refCount()
+
+
 
     }
 
@@ -175,11 +188,11 @@ class Sources {
             //************У горячего Observable есть операторы, которые делают его работу отчасти сходной с работой холодного.****************//
 
             //Replay()
-            val hotObservableReplay = producer.hotObservableReplay()
-            hotObservableReplay.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
-            hotObservableReplay.connect() //Начинаем вывод данных
-            Thread.sleep(3000)
-            hotObservableReplay.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}//Данные идут не с нуля, как у холодного обсервера,
+//            val hotObservableReplay = producer.hotObservableReplay()
+//            hotObservableReplay.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
+//            hotObservableReplay.connect() //Начинаем вывод данных
+//            Thread.sleep(3000)
+//            hotObservableReplay.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}//Данные идут не с нуля, как у холодного обсервера,
             //Пример выполнения: Второй подписчик получает аналогично все данные хоть и подключился на 3 секунды позже
             //2021-10-04 16:34:48.920 22135-22163/com.shumikhin.gbcoursepopularlibrary D/TAG: 0
             //2021-10-04 16:34:49.920 22135-22163/com.shumikhin.gbcoursepopularlibrary D/TAG: 1
@@ -190,10 +203,23 @@ class Sources {
             //2021-10-04 16:34:51.920 22135-22163/com.shumikhin.gbcoursepopularlibrary D/TAG: 3
             //2021-10-04 16:34:51.920 22135-22163/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 3
 
-
-
-
-
+            //RefCount()
+            val hotObservableRefCount = producer.hotObservableRefCount()
+            hotObservableRefCount.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
+            //Здесь нет метода connect(), так как класс ConnectableObservable, полученный методом publish(),
+            //обёрнут обратно в класс Observable, благодаря использованию метода refCount().
+            Thread.sleep(3000)
+            hotObservableRefCount.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}
+            //Пример выполнения: горячий обсервер который ведет себя как холодный, но с потоком данных как у горячего
+            //2021-10-04 16:47:06.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 0
+            //2021-10-04 16:47:07.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 1
+            //2021-10-04 16:47:08.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 2
+            //2021-10-04 16:47:09.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 3
+            //2021-10-04 16:47:09.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 3
+            //2021-10-04 16:47:10.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 4
+            //2021-10-04 16:47:10.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 4
+            //2021-10-04 16:47:11.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 5
+            //2021-10-04 16:47:11.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 5
 
         }
 
