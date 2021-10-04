@@ -117,6 +117,13 @@ class Sources {
                 .publish()
                 .refCount()
 
+        //Сache()
+        //Observable, который появится в результате работы этого оператора, будет похож на результат
+        //операторов replay() и refCount(). Он начинает работу при первом подписчике, хранит все элементы и
+        //выдаёт их каждому новому подписчику, но не заканчивает работу при отсутствии подписчиков.
+        fun hotObservableCache() = Observable
+            .interval(1, TimeUnit.SECONDS)
+            .cache()
 
 
     }
@@ -204,12 +211,12 @@ class Sources {
             //2021-10-04 16:34:51.920 22135-22163/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 3
 
             //RefCount()
-            val hotObservableRefCount = producer.hotObservableRefCount()
-            hotObservableRefCount.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
-            //Здесь нет метода connect(), так как класс ConnectableObservable, полученный методом publish(),
-            //обёрнут обратно в класс Observable, благодаря использованию метода refCount().
-            Thread.sleep(3000)
-            hotObservableRefCount.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}
+//            val hotObservableRefCount = producer.hotObservableRefCount()
+//            hotObservableRefCount.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
+//            //Здесь нет метода connect(), так как класс ConnectableObservable, полученный методом publish(),
+//            //обёрнут обратно в класс Observable, благодаря использованию метода refCount().
+//            Thread.sleep(3000)
+//            hotObservableRefCount.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}
             //Пример выполнения: горячий обсервер который ведет себя как холодный, но с потоком данных как у горячего
             //2021-10-04 16:47:06.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 0
             //2021-10-04 16:47:07.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 1
@@ -220,6 +227,22 @@ class Sources {
             //2021-10-04 16:47:10.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 4
             //2021-10-04 16:47:11.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: 5
             //2021-10-04 16:47:11.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 5
+
+            //Сache() соединяет 2 предыдущих
+            val hotObservableCache = producer.hotObservableCache()
+            hotObservableCache.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
+            //Здесь нет метода connect()
+            Thread.sleep(3000)
+            hotObservableCache.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}
+            //Пример выполнения:
+            //2021-10-04 16:54:25.993 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: 0
+            //2021-10-04 16:54:26.994 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: 1
+            //2021-10-04 16:54:27.992 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: 2
+            //2021-10-04 16:54:27.993 22429-22429/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 0
+            //2021-10-04 16:54:27.993 22429-22429/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 1
+            //2021-10-04 16:54:27.993 22429-22429/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 2
+            //2021-10-04 16:54:28.993 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: 3
+            //2021-10-04 16:54:28.993 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 3
 
         }
 
