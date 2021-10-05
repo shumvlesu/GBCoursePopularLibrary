@@ -15,7 +15,7 @@ class Multithreading {
     /** Производитель данных */
     class Producer {
 
-        fun scheduledObservable() = Observable.create<Boolean> {
+        fun scheduledObservable(): Observable<Boolean> = Observable.create {
             it.onNext(true)
         }
 
@@ -46,6 +46,23 @@ class Multithreading {
                 .map { Log.d(myTAG, "Тяжелая обработка map в потоке computation - $it") }
                 //И тепрь возвращаем все в UI поток
                 .observeOn(AndroidSchedulers.mainThread()) //указываем где хотим этот поток обработать.
+
+                //Примеры обработак ошибок в потоках:
+                //onErrorReturn - Этот оператор перехватывает ошибку и передаёт вместо неё значение 0. Однако работа источника при этом всё равно завершается.
+                .onErrorReturn { return@onErrorReturn 0 }
+
+                //onErrorResumeNext - Аналогичный оператор, только вместо одного значения при ошибке он передаёт запасной источник,
+                //который перехватит управление на себя и продолжит работу всей последовательности в случае возникновения ошибки в исходной
+                //.onErrorResumeNext {
+                //    return@onErrorResumeNext Observable.just(0)
+                //}
+
+                //retry
+                //Этот оператор в случае ошибки перезапускает подписку
+                //В качестве аргумента передаётся максимальное количество попыток. Это удобно, например, когда мы
+                //делаем сетевые запросы.
+                //.retry(5)
+
                 .subscribe() { Log.d(myTAG, "$it") }
 
         }
