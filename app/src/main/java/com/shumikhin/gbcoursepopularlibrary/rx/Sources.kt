@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -126,7 +127,34 @@ class Sources {
             .cache()
 
 
-    }
+        //Subject
+        //Subject представляет собой класс, который расширяет (наследует) Observable и реализует интерфейс
+        //Observer. Это одновременно и Observable, и Observer. То есть он может подписываться на источник
+        //данных и рассылать эти данные своим подписчикам. Ещё такой класс используется как некий
+        //источник на ручном приводе, вручную вызывая onNext, когда это требуется. Subject крайне полезны,
+        //например, когда надо быстро связать между собой реактивный и нереактивный код, так как позволяют
+        //сделать это без массивного рефакторинга нереактивного кода в реактивный. Достаточно просто
+        //создать Subject, выставить его наружу из нереактивного класса и изнутри передавать в него значения
+        //по мере работы. Так можно, например, оборачивать в Rx библиотеки, асинхронный код которых
+        //передаёт свой результат через колбэки.
+        //короче говоря он и источник и подписчик одновременно
+        //fun publishSubject() = PublishSubject.create<String>().apply {
+        //    Observable
+        //        .timer(2, TimeUnit.SECONDS)
+        //        .subscribe { onNext("Значение из subject") }
+        //}
+        //2й пример Subject
+        fun publishSubject() = PublishSubject.create<Long> { publishEmitter ->
+            Observable
+                .interval(2, TimeUnit.SECONDS) //interval не существует для всего что с наружи
+                .subscribe { publishEmitter.onNext(it) } //Но на него можно здесь подписаться
+                                                         // и передавать данные в publishEmitter
+        }
+
+
+
+
+        }
 
     /** Потребитель данных */
     class Consumer(val producer: Producer) {
@@ -229,11 +257,11 @@ class Sources {
             //2021-10-04 16:47:11.559 22298-22324/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 5
 
             //Сache() соединяет 2 предыдущих
-            val hotObservableCache = producer.hotObservableCache()
-            hotObservableCache.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
-            //Здесь нет метода connect()
-            Thread.sleep(3000)
-            hotObservableCache.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}
+//            val hotObservableCache = producer.hotObservableCache()
+//            hotObservableCache.subscribe { Log.d(TAG, it.toString())} //Здесь еще не начинается вывод, мы просто подписались
+//            //Здесь нет метода connect()
+//            Thread.sleep(3000)
+//            hotObservableCache.subscribe {Log.d(TAG,"Отложенный подписчик: $it")}
             //Пример выполнения:
             //2021-10-04 16:54:25.993 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: 0
             //2021-10-04 16:54:26.994 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: 1
@@ -243,6 +271,30 @@ class Sources {
             //2021-10-04 16:54:27.993 22429-22429/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 2
             //2021-10-04 16:54:28.993 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: 3
             //2021-10-04 16:54:28.993 22429-22458/com.shumikhin.gbcoursepopularlibrary D/TAG: Отложенный подписчик: 3
+
+            //Subject
+//            val subject = producer.publishSubject()
+//            subject.subscribe({
+//                Log.d(TAG,"onNext: $it")
+//            }, {
+//                Log.d(TAG,"onError: ${it.message}")
+//            })
+//            subject.onNext("Вызван из execute()")
+            //Пример выполнения:
+            //2021-10-05 10:59:15.537 23321-23321/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: Вызван из execute()
+            //2021-10-05 10:59:17.537 23321-23347/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: Значение из subject
+
+            //2й пример
+            val subject = producer.publishSubject()
+            subject.subscribe{Log.d(TAG,"onNext: $it")}
+            //Пример выполнения:
+            //2021-10-05 11:13:06.983 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 0
+            //2021-10-05 11:13:08.939 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 1
+            //2021-10-05 11:13:10.940 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 2
+            //2021-10-05 11:13:12.989 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 3
+            //2021-10-05 11:13:14.940 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 4
+            //2021-10-05 11:13:16.939 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 5
+            //...
 
         }
 

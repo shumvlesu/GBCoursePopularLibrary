@@ -1,8 +1,10 @@
 package com.shumikhin.gbcoursepopularlibrary
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
+import com.shumikhin.gbcoursepopularlibrary.rx.NetworkStatus
 import com.shumikhin.gbcoursepopularlibrary.rx.Sources
 
 
@@ -22,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         //CreationTeacherExample().init()
 
         Sources().init()
-
+        var statusText = ""
+        NetworkStatus(this).status().subscribe(){
+            statusText = "Доступна ли сеть: $it"
+        }
+        Toast.makeText(applicationContext, statusText, Toast.LENGTH_LONG).show()
+        vb.textAndroid.text = statusText
     }
 }
