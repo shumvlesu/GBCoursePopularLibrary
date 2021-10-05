@@ -285,8 +285,8 @@ class Sources {
             //2021-10-05 10:59:17.537 23321-23347/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: Значение из subject
 
             //2й пример
-            val subject = producer.publishSubject()
-            subject.subscribe{Log.d(TAG,"onNext: $it")}
+//            val subject = producer.publishSubject()
+//            subject.subscribe{Log.d(TAG,"onNext: $it")}
             //Пример выполнения:
             //2021-10-05 11:13:06.983 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 0
             //2021-10-05 11:13:08.939 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 1
@@ -295,6 +295,13 @@ class Sources {
             //2021-10-05 11:13:14.940 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 4
             //2021-10-05 11:13:16.939 23503-23537/com.shumikhin.gbcoursepopularlibrary D/TAG: onNext: 5
             //...
+
+
+
+
+
+
+
 
         }
 

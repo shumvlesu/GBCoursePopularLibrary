@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
+import com.shumikhin.gbcoursepopularlibrary.rx.Multithreading
 import com.shumikhin.gbcoursepopularlibrary.rx.NetworkStatus
 import com.shumikhin.gbcoursepopularlibrary.rx.Sources
 
@@ -23,7 +24,12 @@ class MainActivity : AppCompatActivity() {
         //3 урок комментим
         //CreationTeacherExample().init()
 
-        Sources().init()
+        //Уже перегружен класс для многопоточности создал новый
+        //Sources().init()
+
+        //Пример с многопоточностью
+        Multithreading().init()
+
         var statusText = ""
         NetworkStatus(this).status().subscribe(){
             statusText = "Доступна ли сеть: $it"
