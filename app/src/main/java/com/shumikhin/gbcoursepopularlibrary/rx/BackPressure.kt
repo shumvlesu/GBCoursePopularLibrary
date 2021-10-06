@@ -3,6 +3,7 @@ package com.shumikhin.gbcoursepopularlibrary.rx
 import android.util.Log
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 
@@ -41,15 +42,24 @@ class BackPressure {
         //onBackpressureLatest() — выбрасывать все значения, кроме последнего.
         //То есть при перегрузе обработчика будут выбрасываться все значения, кроме последнего
         ).subscribeOn(Schedulers.io()).onBackpressureLatest()
+
+        //Пример для отписки от потока
+        fun observable1(): Observable<String> = Observable.just("1")
+        fun observable2(): Observable<String> = Observable.just("2")
+
     }
 
     class Consumer(private val producer: Producer) {
 
         private val myTAG = "Flowable"
+        val compositeDisposable =  CompositeDisposable()
 
         fun consume() {
-           // consumeNoBackPressure()//Без страдегии onBackpressureLatest
-            consumeBackPressure()
+            // consumeNoBackPressure()//Без страдегии onBackpressureLatest
+            //consumeBackPressure()//используя Flowable
+
+            //Пример отписки от потока
+            execComposite()
         }
 
         //Если мы запустим пример, то
@@ -95,6 +105,21 @@ class BackPressure {
         //этого размера было бы достаточно, чтобы значения выводились по порядку какое-то время —
         //нетрудно догадаться, какое. Поэтому для демонстрации работы backpressure этот буфер отключился
         //посредством передачи его размера, равного единице.
+
+
+        fun execComposite() {
+            val compositeDisposable = CompositeDisposable()
+            val disposable1 = producer.observable1().subscribe {
+                Log.d(myTAG,it)
+            }
+            val disposable2 = producer.observable2().subscribe {
+                Log.d(myTAG,it)
+            }
+            //отписываемся
+            compositeDisposable.addAll(disposable1)
+            compositeDisposable.addAll(disposable2)
+        }
+
 
     }
 }
