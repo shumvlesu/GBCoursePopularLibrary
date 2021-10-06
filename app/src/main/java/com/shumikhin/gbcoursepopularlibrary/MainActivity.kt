@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
+import com.shumikhin.gbcoursepopularlibrary.rx.BackPressure
 import com.shumikhin.gbcoursepopularlibrary.rx.Multithreading
 import com.shumikhin.gbcoursepopularlibrary.rx.NetworkStatus
 import com.shumikhin.gbcoursepopularlibrary.rx.Sources
@@ -28,7 +29,10 @@ class MainActivity : AppCompatActivity() {
         //Sources().init()
 
         //Пример с многопоточностью
-        Multithreading().init()
+        //Multithreading().init()
+
+        //Пример использования Flowable
+        BackPressure().execute()
 
         var statusText = ""
         NetworkStatus(this).status().subscribe(){
@@ -36,5 +40,8 @@ class MainActivity : AppCompatActivity() {
         }
         Toast.makeText(applicationContext, statusText, Toast.LENGTH_LONG).show()
         vb.textAndroid.text = statusText
+
+
+
     }
 }
