@@ -5,4 +5,10 @@
     <string name="choose_image">Выберите изображение</string>
     <string name="convert">Конвертировать</string>
     <string name="cancel">Отменить</string>
+    <string name="convert_title">Конвертер</string>
+    <string name="permission_failed_to_read_files">Отсутствует разрешение на чтение файлов</string>
+    <string name="permission_failed_to_write_files">Отсутствует разрешение на запись файлов</string>
+    <string name="grant">Запросить доступ</string>
+    <string name="need_permission_write_file">Требуется разрешение для чтения файлов</string>
+    <string name="need_permission_read_file">Требуется разрешение для чтения файлов</string>
 </resources>

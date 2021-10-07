@@ -1,12 +1,41 @@
 package com.shumikhin.gbcoursepopularlibrary
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.shumikhin.gbcoursepopularlibrary.App.Navigation.router
+import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
+import com.shumikhin.gbcoursepopularlibrary.presenter.ConvertScreen
 import moxy.MvpAppCompatActivity
 
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
+
+    private val vb: ActivityMainBinding by viewBinding()
+
+//    private val presenter by moxyPresenter { MainPresenter(router) }
+//    private val navigator = AppNavigator(this, R.id.container)
+
+//    override fun onResumeFragments() {
+//        super.onResumeFragments()
+//        navigatorHolder.setNavigator(navigator)
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        navigatorHolder.removeNavigator()
+//    }
+//
+//    override fun onBackPressed() {
+//        supportFragmentManager.fragments.forEach {
+//            if (it is BackButtonListener && it.backPressed()) {
+//                return
+//            }
+//        }
+//        presenter.back()
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        router.replaceScreen(ConvertScreen().create())
     }
+
 }
