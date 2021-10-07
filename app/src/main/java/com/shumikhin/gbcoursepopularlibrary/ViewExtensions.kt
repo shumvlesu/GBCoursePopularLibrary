@@ -3,6 +3,7 @@ package com.shumikhin.gbcoursepopularlibrary
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
+//Отображение вьюхи
 fun View.visible(visible: () -> Boolean): View {
     visibility = if (visible()) {
         View.VISIBLE
