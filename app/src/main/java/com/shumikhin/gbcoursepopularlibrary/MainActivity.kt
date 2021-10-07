@@ -2,17 +2,20 @@ package com.shumikhin.gbcoursepopularlibrary
 
 import android.os.Bundle
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.shumikhin.gbcoursepopularlibrary.App.Navigation.router
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
 import com.shumikhin.gbcoursepopularlibrary.presenter.ConvertScreen
+import com.shumikhin.gbcoursepopularlibrary.presenter.MainPresenter
 import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
 
     private val vb: ActivityMainBinding by viewBinding()
 
-//    private val presenter by moxyPresenter { MainPresenter(router) }
-//    private val navigator = AppNavigator(this, R.id.container)
+     val presenter by moxyPresenter { MainPresenter(router) }
+     val navigator = AppNavigator(this, R.id.container)
 
 //    override fun onResumeFragments() {
 //        super.onResumeFragments()
