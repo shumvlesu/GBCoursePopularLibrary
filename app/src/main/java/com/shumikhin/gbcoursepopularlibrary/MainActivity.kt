@@ -10,12 +10,13 @@ import com.shumikhin.gbcoursepopularlibrary.presenter.MainPresenter
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 
-class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
-    private val vb: ActivityMainBinding by viewBinding()
+    private var vb: ActivityMainBinding? = null
+   // private val vb: ActivityMainBinding by viewBinding()
 
-     val presenter by moxyPresenter { MainPresenter(router) }
-     val navigator = AppNavigator(this, R.id.container)
+//     val presenter by moxyPresenter { MainPresenter(router) }
+//     val navigator = AppNavigator(this, R.id.container)
 
 //    override fun onResumeFragments() {
 //        super.onResumeFragments()
@@ -38,6 +39,8 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vb = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(vb?.root)
         router.replaceScreen(ConvertScreen().create())
     }
 
