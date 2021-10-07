@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="target_img_margin_top">10dp</dimen>
+    <dimen name="convert_complete_img_margin_top">16dp</dimen>
+    <item name="converter_img_height_percent" format="float" type="dimen">0.30</item>
+    <item name="converter_def_width_percent" format="float" type="dimen">0.8</item>
+    <item name="convert_button_height_percent" format="float" type="dimen">0.1</item>
+</resources>
