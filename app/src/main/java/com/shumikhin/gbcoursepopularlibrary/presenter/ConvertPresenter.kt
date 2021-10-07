@@ -20,23 +20,19 @@ class ConvertPresenter(
     companion object {
         private const val DEF_FILE_NAME = "saved.png"
         private const val IMAGE_NOT_SELECTED = "Не выбран рисунок"
-        private const val SUCCESS_CONVERT = "Изображение успешно сконвертировано в PNG формат"
+        private const val SUCCESS_CONVERT = "Изображение сконвертировано в PNG формат"
         private const val CANCEL_CONVERT = "Отмена конвертирования"
     }
 
     private var uriSelected: Uri? = null
     private val disposables = CompositeDisposable()
 
-    /**
-     * Выбрать изображение
-     */
+    // Выбрать изображение
     fun selectImage() {
         viewState.chooseImage()
     }
 
-    /**
-     * Изображение выбрано
-     */
+    // Изображение выбрано
     fun onImageSelected(targetUri: Uri) {
         uriSelected = targetUri
         viewState.showSelectedImage(targetUri)
@@ -45,9 +41,7 @@ class ConvertPresenter(
 
     override fun onDestroy() = disposables.clear()
 
-    /**
-     * Отменить конвертирование, удалить подписки
-     */
+    //Отменить конвертирование, удалить подписки
     fun convertStop() {
         with(viewState) {
             showSelectedImage(null)
@@ -60,9 +54,7 @@ class ConvertPresenter(
         disposables.clear()
     }
 
-    /**
-     * Начать конвертирование
-     */
+    // Начать конвертирование
     fun convertStart() {
         viewState.showLoading(true)
         val toSaveFile = File(Environment.getExternalStorageDirectory().toString(), DEF_FILE_NAME)
@@ -101,4 +93,7 @@ class ConvertPresenter(
             }
         }
     }
+
+
+
 }

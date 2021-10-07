@@ -37,7 +37,6 @@ class ConvertFragment : MvpAppCompatFragment(R.layout.fragment_convert), Convert
         vb.root.showSnakeBar(message)
         //Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
         //Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-
     }
 
     private val presenter: ConvertPresenter by moxyPresenter {
@@ -53,10 +52,8 @@ class ConvertFragment : MvpAppCompatFragment(R.layout.fragment_convert), Convert
         init()
     }
 
-    /**
-     * Начальная инициализация. Для кнопок навешиваются ClickListener-ы.
-     * Делаются неактивными кнопки Конвертировать и Отмена
-     */
+    // Начальная инициализация. Для кнопок навешиваются ClickListener-ы.
+    // Делаются неактивными кнопки Конвертировать и Отмена
     private fun init() {
         with(vb) {
             btnSelectImage.setOnClickListener { setImage() }
@@ -64,28 +61,22 @@ class ConvertFragment : MvpAppCompatFragment(R.layout.fragment_convert), Convert
             btnCancel.setOnClickListener { convertCancel() }
             showLoading(false)
         }
-
         useConvertButtons(false)
     }
 
-    /**
-     * Отменить конвертирование
-     */
+    //Отменить конвертирование
+
     private fun convertCancel() {
         presenter.convertStop()
         showLoading(false)
     }
 
-    /**
-     * Начать конвертирование
-     */
+    //Начать конвертирование
     private fun convertStart() {
         checkWriteFilesPermission()
     }
 
-    /**
-     * Выбрать изображения для конвертации
-     */
+    //Выбрать изображения для конвертации
     private fun setImage() {
         checkReadFilesPermission()
     }
@@ -103,10 +94,8 @@ class ConvertFragment : MvpAppCompatFragment(R.layout.fragment_convert), Convert
         imagePicker.launch("image/*")
     }
 
-    /**
-     * Отобразить исходный рисунок с помощью Glide
-     * @param uri Uri исходного изображения
-     */
+    // Отобразить исходный рисунок с помощью Glide
+    // uri - Uri исходного изображения
     override fun showSelectedImage(uri: Uri?) {
         Glide.with(requireContext())
             .load(uri)
@@ -115,10 +104,8 @@ class ConvertFragment : MvpAppCompatFragment(R.layout.fragment_convert), Convert
             .into(vb.targetImg)
     }
 
-    /**
-     * Отобразить конвертированный рисунок с помощью Glide
-     * @param uri Uri конвертированного изображения
-     */
+    // Отобразить конвертированный рисунок с помощью Glide
+    // uri - Uri конвертированного изображения
     override fun showResultImage(uri: Uri?) {
         Glide.with(requireContext())
             .load(uri)
@@ -144,9 +131,7 @@ class ConvertFragment : MvpAppCompatFragment(R.layout.fragment_convert), Convert
         vb.progress.visible { isLoading }
     }
 
-    /**
-     * Проверить разрешение на чтение файлов
-     */
+    // Проверить разрешение на чтение файлов
     private fun checkReadFilesPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -170,9 +155,7 @@ class ConvertFragment : MvpAppCompatFragment(R.layout.fragment_convert), Convert
         }
     }
 
-    /**
-     * Проверить разрешение на запись файлов. Хотя для записи на флешку у меня не спрашивало.
-     */
+    // Проверить разрешение на запись файлов.
     private fun checkWriteFilesPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),

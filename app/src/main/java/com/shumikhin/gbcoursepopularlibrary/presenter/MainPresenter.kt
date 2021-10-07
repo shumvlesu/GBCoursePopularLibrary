@@ -19,4 +19,5 @@ class MainPresenter (private val router: Router) : MvpPresenter<MainView>() {
         super.onDestroy()
         disposables.dispose()
     }
+
 }

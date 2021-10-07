@@ -1,4 +1,4 @@
-package com.shumikhin.gbcoursepopularlibrary.presenter
+package com.shumikhin.gbcoursepopularlibrary.view
 
 import com.github.terrakok.cicerone.Screen
 import com.github.terrakok.cicerone.androidx.FragmentScreen

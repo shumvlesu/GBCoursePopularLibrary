@@ -6,7 +6,7 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.shumikhin.gbcoursepopularlibrary.App.Navigation.navigatorHolder
 import com.shumikhin.gbcoursepopularlibrary.App.Navigation.router
 import com.shumikhin.gbcoursepopularlibrary.databinding.ActivityMainBinding
-import com.shumikhin.gbcoursepopularlibrary.presenter.ConvertScreen
+import com.shumikhin.gbcoursepopularlibrary.view.ConvertScreen
 import com.shumikhin.gbcoursepopularlibrary.presenter.MainPresenter
 import com.shumikhin.gbcoursepopularlibrary.view.BackButtonListener
 import moxy.MvpAppCompatActivity
@@ -39,8 +39,8 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-     router.replaceScreen(ConvertScreen().create())
+        //Вызываем фрагмент
+        router.replaceScreen(ConvertScreen().create())
     }
 
 }

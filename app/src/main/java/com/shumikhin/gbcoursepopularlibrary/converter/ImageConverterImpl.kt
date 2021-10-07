@@ -9,17 +9,12 @@ import java.io.File
 
 class ImageConverterImpl(private val context: Context) : ImageConverter {
     companion object {
-        /**
-         * DEF_QUALITY - Степень сжатия. Для PNG практически бесполезна,
-         * но для JPEG очень хорошо сжимает
-         */
+        // DEF_QUALITY - Степень сжатия. Для PNG практически бесполезна, но для JPEG очень хорошо сжимает
         private const val DEF_QUALITY = 100
 
-        /**
-         * DEF_DELAY - Задержка, для симуляции долгого процесса,
-         * иначе конвертирование происходит очень быстро. Хотя может я просто маленькие файлы выбирал.
-         */
+        // DEF_DELAY - Задержка, для симуляции долгого процесса, иначе конвертирование происходит очень быстро. Хотя может я просто маленькие файлы выбирал.
         private const val DEF_DELAY = 3000L
+
         private const val ERROR_CONVERT = "При конвертировании произошла ошибка."
     }
 
@@ -44,4 +39,5 @@ class ImageConverterImpl(private val context: Context) : ImageConverter {
                 }
             }
         }
+
 }

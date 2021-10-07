@@ -2,21 +2,15 @@ package com.shumikhin.gbcoursepopularlibrary.scheduler
 
 import io.reactivex.Scheduler
 
-
 interface Schedulers {
 
-    /**
-     * Фоновый поток
-     */
+    // Фоновый поток
     fun background(): Scheduler
 
-    /**
-     * Главный поток
-     */
+    // Главный поток
     fun main(): Scheduler
 
-    /**
-     * Поток для вычислений
-     */
+    // Поток для вычислений
     fun computation(): Scheduler
+
 }
