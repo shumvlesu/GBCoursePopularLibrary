@@ -73,5 +73,9 @@ dependencies {
     //RxKotlin
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
 
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.6.0'
+
+
 
 }
