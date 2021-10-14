@@ -7,6 +7,7 @@ import com.shumikhin.gbcoursepopularlibrary.screens.AndroidScreens
 import com.shumikhin.gbcoursepopularlibrary.view.ui.BackButtonListener
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
+import okhttp3.OkHttpClient
 
 //class MainActivity : AppCompatActivity(), MainView {
 //Заменяем AppCompatActivity(), подключая активити к мокси MvpAppCompatActivity()

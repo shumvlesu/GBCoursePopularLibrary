@@ -14,7 +14,12 @@ import moxy.ktx.moxyPresenter
 class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     private var vb: FragmentUsersBinding? = null
-    val presenter: UsersPresenter by moxyPresenter { UsersPresenter(GithubUsersRepo(), App.instance.router) }
+    val presenter: UsersPresenter by moxyPresenter {
+        UsersPresenter(
+            GithubUsersRepo(),
+            App.instance.router
+        )
+    }
     var adapter: UsersRVAdapter? = null
 
     companion object {
