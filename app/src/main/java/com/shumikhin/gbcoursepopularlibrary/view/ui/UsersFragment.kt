@@ -8,19 +8,20 @@ import com.shumikhin.gbcoursepopularlibrary.App
 import com.shumikhin.gbcoursepopularlibrary.databinding.FragmentUsersBinding
 import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.presentation.UsersPresenter
+import com.shumikhin.gbcoursepopularlibrary.view.ui.images.GlideImageLoader
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     private var vb: FragmentUsersBinding? = null
-    val presenter: UsersPresenter by moxyPresenter {
+    private val presenter: UsersPresenter by moxyPresenter {
         UsersPresenter(
             GithubUsersRepo(),
             App.instance.router
         )
     }
-    var adapter: UsersRVAdapter? = null
+    private var adapter: UsersRVAdapter? = null
 
     companion object {
         fun newInstance() = UsersFragment()
@@ -31,7 +32,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     override fun init() {
         //vb?.rvUsers?.layoutManager = LinearLayoutManager(context)
         vb?.rvUsers?.layoutManager = LinearLayoutManager(requireContext())
-        adapter = UsersRVAdapter(presenter.usersListPresenter)
+        adapter = UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())
         vb?.rvUsers?.adapter = adapter
     }
 

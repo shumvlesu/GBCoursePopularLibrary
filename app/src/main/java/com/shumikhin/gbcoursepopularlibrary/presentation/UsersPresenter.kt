@@ -34,6 +34,8 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
             view.setLogin(user.login.orEmpty())
+            user.avatarUrl?.let {view.loadAvatar(it)}
+
         }
 
     }

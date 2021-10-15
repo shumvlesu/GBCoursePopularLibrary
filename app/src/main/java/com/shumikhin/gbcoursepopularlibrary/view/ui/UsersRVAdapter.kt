@@ -2,10 +2,12 @@ package com.shumikhin.gbcoursepopularlibrary.view.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.shumikhin.gbcoursepopularlibrary.databinding.ItemUserBinding
 import com.shumikhin.gbcoursepopularlibrary.presentation.IUserListPresenter
 import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
+import com.shumikhin.gbcoursepopularlibrary.view.ui.images.IImageLoader
 
 
 //Таким образом, адаптер не имеет ссылок на данные и полностью делегирует процесс наполнения
@@ -16,7 +18,7 @@ import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 //nullable-значения функционального типа. Эта функция есть у любого значения функционального типа,
 //и её вызов вызывает саму функцию, которая и считается этим значением. Проще говоря,
 //presenter.itemClickListener?.invoke(holder) вызовет itemClickListener, если он не равен null.
-class UsersRVAdapter(private val presenter: IUserListPresenter) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
+class UsersRVAdapter(private val presenter: IUserListPresenter, val imageLoader: IImageLoader<ImageView>) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     //кроме создания самой вьюхи все остальное вешаем на адаптер
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -37,7 +39,15 @@ class UsersRVAdapter(private val presenter: IUserListPresenter) : RecyclerView.A
             override fun setLogin(text: String) = with(vb) {
             tvLogin.text = text
             }
+            //Загружаем аватарку
+            override fun loadAvatar(url: String) = with(vb) {
+            imageLoader.loadInto(url, vb.ivAvatar)
+            }
+
 
         }
+
+
+
 
 }

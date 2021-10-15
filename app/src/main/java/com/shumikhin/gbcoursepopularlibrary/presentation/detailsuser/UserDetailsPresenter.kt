@@ -8,7 +8,7 @@ import moxy.MvpPresenter
 class UserDetailsPresenter (private val router: Router, private val user: GithubUser) : MvpPresenter<UserDetailsView>() {
 
     fun setUserData () {
-        user.login.let {name->
+        user.id.let {name->
             name?.let { viewState.setUserName(it) }
         }
     }
