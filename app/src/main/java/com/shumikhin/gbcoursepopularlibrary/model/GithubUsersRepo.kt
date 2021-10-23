@@ -1,28 +1,29 @@
 package com.shumikhin.gbcoursepopularlibrary.model
 
 
-import com.shumikhin.gbcoursepopularlibrary.retrofit.ApiHolder
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.kotlin.toObservable
+import com.shumikhin.gbcoursepopularlibrary.retrofit.ApiHolder.apiService
+import com.shumikhin.gbcoursepopularlibrary.retrofit.IDataSource
+import com.shumikhin.gbcoursepopularlibrary.retrofit.IGitHubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.retrofit.UserRepo
+import io.reactivex.rxjava3.core.Single
 
-//репозиторий с фиктивными данными, которым будем пользоваться, пока не
-//реализуем получение данных из сети
-class GithubUsersRepo {
-
-//    private val repositories = listOf(
-//        GithubUser("login1"),
-//        GithubUser("login2"),
-//        GithubUser("login3"),
-//        GithubUser("login4"),
-//        GithubUser("login5")
-//    )
+class GithubUsersRepo(private val api: IDataSource) : IGitHubUsersRepo {
 
 //    fun getUsers(): Observable<GithubUser> {
 //        //fromIterable, реализованый RxKotlin, похож на just, но в него передаётся не набор, а коллекция элементов
 //        return repositories.toObservable()
 //    }
 
-    fun getUsers() = ApiHolder.apiService.getUsers()
+    //fun getUsers() = ApiHolder.apiService.getUsers()
 
+    override fun getUsers(): Single<List<GithubUser>> {
+        //return apiService.getUsers().subscribeOn(Schedulers.io())
+        return apiService.getUsers()
+    }
+
+    override fun getUserRepos(url: String): Single<List<UserRepo>> {
+        //return apiService.getUserRepos(url).subscribeOn(Schedulers.io())
+        return apiService.getUserRepos(url)
+    }
 
 }

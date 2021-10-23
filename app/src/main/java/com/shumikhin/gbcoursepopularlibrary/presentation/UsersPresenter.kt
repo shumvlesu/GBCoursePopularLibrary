@@ -8,7 +8,6 @@ import com.shumikhin.gbcoursepopularlibrary.screens.AndroidScreens
 import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UsersView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 
@@ -20,7 +19,8 @@ import moxy.MvpPresenter
 //● отдаём их презентеру списка;
 //● командуем View обновить список.
 //Далее оставляем заготовку слушателя клика
-class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router: Router) : MvpPresenter<UsersView>() {
+class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router: Router) :
+    MvpPresenter<UsersView>() {
 
     //Неиспользуем у внутреннего презентера мокси так как  он все равно внутри презентера который мокси использжует.
     class UsersListPresenter : IUserListPresenter {
@@ -34,7 +34,7 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
             view.setLogin(user.login.orEmpty())
-            user.avatarUrl?.let {view.loadAvatar(it)}
+            user.avatarUrl?.let { view.loadAvatar(it) }
 
         }
 
@@ -62,15 +62,13 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
 
     //загружаем даннные при помощи RxJava
     private fun loadData() {
-        usersRepo.getUsers().
-        subscribeOn(Schedulers.io()).
-        observeOn(AndroidSchedulers.mainThread())
-        .subscribe({users->
-            usersListPresenter.users.addAll(users)
-            viewState.updateList()
-        },{
-           Log.e("UsersPresenter","Ошибка получения пользователей!", it)
-        })
+        usersRepo.getUsers().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ users ->
+                usersListPresenter.users.addAll(users)
+                viewState.updateList()
+            }, {
+                Log.e("UsersPresenter", "Ошибка получения пользователей!", it)
+            })
     }
 
     //Для обработки нажатия клавиши «Назад» добавляем функцию backPressed(). Она возвращает
