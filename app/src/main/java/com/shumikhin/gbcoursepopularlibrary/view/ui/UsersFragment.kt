@@ -8,6 +8,7 @@ import com.shumikhin.gbcoursepopularlibrary.App
 import com.shumikhin.gbcoursepopularlibrary.databinding.FragmentUsersBinding
 import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.presentation.UsersPresenter
+import com.shumikhin.gbcoursepopularlibrary.retrofit.ApiHolder
 import com.shumikhin.gbcoursepopularlibrary.view.ui.images.GlideImageLoader
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -17,7 +18,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private var vb: FragmentUsersBinding? = null
     private val presenter: UsersPresenter by moxyPresenter {
         UsersPresenter(
-            GithubUsersRepo(),
+            GithubUsersRepo(ApiHolder.apiService),
             App.instance.router
         )
     }
