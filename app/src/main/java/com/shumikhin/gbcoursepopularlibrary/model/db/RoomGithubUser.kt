@@ -9,5 +9,5 @@ class RoomGithubUser (
     @PrimaryKey var id: String,
     var login: String,
     var avatarUrl: String,
-    var reposUrl: String
+    //var reposUrl: String
 )
