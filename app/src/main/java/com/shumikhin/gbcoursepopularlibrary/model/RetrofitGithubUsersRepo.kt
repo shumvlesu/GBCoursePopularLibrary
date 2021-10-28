@@ -2,6 +2,7 @@ package com.shumikhin.gbcoursepopularlibrary.model
 
 import com.shumikhin.gbcoursepopularlibrary.model.db.Database
 import com.shumikhin.gbcoursepopularlibrary.model.db.RoomGithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IDataSource
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IGitHubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.utils.INetworkStatus

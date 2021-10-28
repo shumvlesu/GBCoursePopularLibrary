@@ -30,8 +30,7 @@ abstract class Database : RoomDatabase() {
         private const val DB_NAME = "database.db"
         private var instance: com.shumikhin.gbcoursepopularlibrary.model.db.Database? = null
 
-        fun getInstance() = instance
-            ?: throw RuntimeException("Database has not been created. Please call create(context)")
+        fun getInstance() = instance?: throw RuntimeException("База данных не создана.")
 
         fun create(context: Context?) {
             if (instance == null) {
@@ -44,6 +43,7 @@ abstract class Database : RoomDatabase() {
                     .build()
             }
         }
+
     }
 
 }

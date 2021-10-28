@@ -1,4 +1,4 @@
-package com.shumikhin.gbcoursepopularlibrary.model
+package com.shumikhin.gbcoursepopularlibrary.model.remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose

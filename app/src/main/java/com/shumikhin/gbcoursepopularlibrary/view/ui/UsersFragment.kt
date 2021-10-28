@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shumikhin.gbcoursepopularlibrary.App
 import com.shumikhin.gbcoursepopularlibrary.databinding.FragmentUsersBinding
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.presentation.UsersPresenter
 import com.shumikhin.gbcoursepopularlibrary.retrofit.ApiHolder
 import com.shumikhin.gbcoursepopularlibrary.view.ui.images.GlideImageLoader

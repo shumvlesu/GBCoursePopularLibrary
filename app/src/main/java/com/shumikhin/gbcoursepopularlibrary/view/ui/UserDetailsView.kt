@@ -1,9 +1,7 @@
 package com.shumikhin.gbcoursepopularlibrary.view.ui
 
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
 import moxy.MvpView
-import moxy.viewstate.strategy.AddToEndSingleStrategy
-import moxy.viewstate.strategy.StateStrategyType
 import moxy.viewstate.strategy.alias.AddToEndSingle
 
 

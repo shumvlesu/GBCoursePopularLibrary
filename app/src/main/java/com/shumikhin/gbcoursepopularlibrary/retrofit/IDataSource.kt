@@ -1,6 +1,6 @@
 package com.shumikhin.gbcoursepopularlibrary.retrofit
 
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Url

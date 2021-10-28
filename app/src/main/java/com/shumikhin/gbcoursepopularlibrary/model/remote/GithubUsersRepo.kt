@@ -1,4 +1,4 @@
-package com.shumikhin.gbcoursepopularlibrary.model
+package com.shumikhin.gbcoursepopularlibrary.model.remote
 
 
 import com.shumikhin.gbcoursepopularlibrary.retrofit.ApiHolder.apiService

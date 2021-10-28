@@ -1,7 +1,7 @@
 package com.shumikhin.gbcoursepopularlibrary.screens
 
 import com.github.terrakok.cicerone.Screen
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
 
 //IScreens для router'a cicirone
 interface IScreens {

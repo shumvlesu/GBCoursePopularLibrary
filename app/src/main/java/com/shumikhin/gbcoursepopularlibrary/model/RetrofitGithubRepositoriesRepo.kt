@@ -2,6 +2,7 @@ package com.shumikhin.gbcoursepopularlibrary.model
 
 import com.shumikhin.gbcoursepopularlibrary.model.db.Database
 import com.shumikhin.gbcoursepopularlibrary.model.db.RoomGithubRepository
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IDataSource
 import com.shumikhin.gbcoursepopularlibrary.utils.INetworkStatus
 import io.reactivex.rxjava3.core.Single
@@ -10,8 +11,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 //Практическое задание 1 - вытащить кэширование в отдельный класс
 //RoomRepositoriesCache и внедрить его сюда через интерфейс IRepositoriesCache
 class RetrofitGithubRepositoriesRepo(
-    val api: IDataSource, val networkStatus:
-    INetworkStatus, val db: Database
+    val api: IDataSource,
+    val networkStatus: INetworkStatus,
+    val db: Database
 ) : IGithubRepositoriesRepo {
 
     override fun getRepositories(user: GithubUser) =

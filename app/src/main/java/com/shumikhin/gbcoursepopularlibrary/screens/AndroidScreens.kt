@@ -1,7 +1,7 @@
 package com.shumikhin.gbcoursepopularlibrary.screens
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UsersFragment
 import com.shumikhin.gbcoursepopularlibrary.view.ui.detailsuser.UserDetailsFragment
 

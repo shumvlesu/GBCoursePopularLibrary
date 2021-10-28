@@ -2,8 +2,8 @@ package com.shumikhin.gbcoursepopularlibrary.presentation
 
 import android.util.Log
 import com.github.terrakok.cicerone.Router
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.screens.AndroidScreens
 import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UsersView

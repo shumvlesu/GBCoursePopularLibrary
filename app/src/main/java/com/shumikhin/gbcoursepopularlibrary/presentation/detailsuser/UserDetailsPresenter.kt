@@ -2,7 +2,7 @@ package com.shumikhin.gbcoursepopularlibrary.presentation.detailsuser
 
 import android.util.Log
 import com.github.terrakok.cicerone.Router
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IGitHubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.retrofit.UserRepo
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UserDetailsView

@@ -7,8 +7,8 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shumikhin.gbcoursepopularlibrary.App
 import com.shumikhin.gbcoursepopularlibrary.databinding.FragmentUserDetailsBinding
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUser
-import com.shumikhin.gbcoursepopularlibrary.model.GithubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.presentation.detailsuser.UserDetailsPresenter
 import com.shumikhin.gbcoursepopularlibrary.retrofit.ApiHolder
 import com.shumikhin.gbcoursepopularlibrary.view.ui.BackButtonListener
