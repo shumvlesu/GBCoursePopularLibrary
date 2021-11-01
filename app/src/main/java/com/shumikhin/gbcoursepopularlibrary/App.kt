@@ -3,6 +3,7 @@ package com.shumikhin.gbcoursepopularlibrary
 import android.app.Application
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
+import com.shumikhin.gbcoursepopularlibrary.model.db.Database
 
 //App нужен для чичероне и для синг активити
 class App : Application() {
