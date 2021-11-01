@@ -1,52 +1,51 @@
 package com.shumikhin.gbcoursepopularlibrary.model
 
-import com.shumikhin.gbcoursepopularlibrary.model.db.Database
-import com.shumikhin.gbcoursepopularlibrary.model.db.RoomGithubRepository
-import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.cache.IRepositoriesCache
+import com.shumikhin.gbcoursepopularlibrary.model.db.RoomGitHubRepository
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GitHubUser
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IDataSource
+import com.shumikhin.gbcoursepopularlibrary.retrofit.UserRepo
 import com.shumikhin.gbcoursepopularlibrary.utils.INetworkStatus
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 //Практическое задание 1 - вытащить кэширование в отдельный класс
 //RoomRepositoriesCache и внедрить его сюда через интерфейс IRepositoriesCache
-class RetrofitGithubRepositoriesRepo(
-    val api: IDataSource,
-    val networkStatus: INetworkStatus,
-    val db: Database
-) : IGithubRepositoriesRepo {
+class RetrofitGitHubRepositoriesRepo(
+    private val api: IDataSource,
+    private val networkStatus: INetworkStatus,
+    private val reposCache: IRepositoriesCache,
+) : IGitHubRepositoriesRepo {
 
-    override fun getRepositories(user: GithubUser) =
+    override fun getRepositories(user: GitHubUser) =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 user.reposUrl?.let { url ->
-                    api.getRepositories(url)
+                    api.getUserRepos(url)
                         .flatMap { repositories ->
                             Single.fromCallable {
                                 val roomUser = user.login?.let {
-                                    db.userDao.findByLogin(it)
+                                    reposCache.getUserByLogin(it)
                                 } ?: throw RuntimeException("No such user in cache")
                                 val roomRepos = repositories.map {
-                                    RoomGithubRepository(
-                                        it.id ?: "",
-                                        it.name ?: "",
-                                        it.forksCount ?: 0,
+                                    RoomGitHubRepository(
+                                        it.id?: "",
+                                        it.name?: "",
+                                        //it.forksCount ?: 0,
                                         roomUser.id
                                     )
                                 }
-                                db.repositoryDao.insert(roomRepos)
+                                reposCache.insertRepositoriesToCache(roomRepos)
                                 repositories
                             }
                         }
-                } ?: Single.error<List<GithubRepository>>(RuntimeException("User has no repos url"))
+                } ?: Single.error<List<UserRepo>>(RuntimeException("User has no repos url"))
                     .subscribeOn(Schedulers.io())
             } else {
-                Single.fromCallable {
-                    val roomUser = user.login?.let { db.userDao.findByLogin(it) }
-                        ?: throw RuntimeException("No such user in cache")
-                    db.repositoryDao.findForUser(roomUser.id)
-                        .map { GithubRepository(it.id, it.name, it.forksCount) }
-                }
+                //Single.fromCallable {
+                //соединеия нет, грузимся из бд
+                reposCache.getCachedRepositoriesByUser(user)
+                //}
             }
         }.subscribeOn(Schedulers.io())
 

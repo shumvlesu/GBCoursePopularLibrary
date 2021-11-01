@@ -9,37 +9,37 @@ interface RepositoryDao {
     //В функциях insert через аргумент аннотации onConflict указываем, что при возникновении конфликта
     //по первичному ключу надо заменить старое значение новым.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: RoomGithubRepository)
+    fun insert(user: RoomGitHubRepository)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg users: RoomGithubRepository)
+    fun insert(vararg users: RoomGitHubRepository)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(users: List<RoomGithubRepository>)
+    fun insert(users: List<RoomGitHubRepository>)
 
     @Update
-    fun update(user: RoomGithubRepository)
+    fun update(user: RoomGitHubRepository)
 
     @Update
-    fun update(vararg users: RoomGithubRepository)
+    fun update(vararg users: RoomGitHubRepository)
 
     @Update
-    fun update(users: List<RoomGithubRepository>)
+    fun update(users: List<RoomGitHubRepository>)
 
     @Delete
-    fun delete(user: RoomGithubRepository)
+    fun delete(user: RoomGitHubRepository)
 
     @Delete
-    fun delete(vararg users: RoomGithubRepository)
+    fun delete(vararg users: RoomGitHubRepository)
 
     @Delete
-    fun delete(users: List<RoomGithubRepository>)
+    fun delete(users: List<RoomGitHubRepository>)
 
-    @Query("SELECT * FROM RoomGithubRepository")
-    fun getAll(): List<RoomGithubRepository>
+    @Query("SELECT * FROM RoomGitHubRepository")
+    fun getAll(): List<RoomGitHubRepository>
 
     //Всё аналогично, но в случае поиска по пользователю используется поле userId — внешний ключ.
-    @Query("SELECT * FROM RoomGithubRepository WHERE userId = :userId")
-    fun findForUser(userId: String): List<RoomGithubRepository>
+    @Query("SELECT * FROM RoomGitHubRepository WHERE userId = :userId")
+    fun findForUser(userId: String): List<RoomGitHubRepository>
 
 }

@@ -1,6 +1,8 @@
 package com.shumikhin.gbcoursepopularlibrary.model.db
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 //Класс описывающий таблицу списка репозиториев пользователя
 //Так как пользователь и репозиторий состоят в отношении «один ко многим»,
 //потребуется внешний ключ. Для этого мы создали поле userId, которое связали с полем id в классе
@@ -14,15 +16,15 @@ import androidx.room.*
 //репозитории без пользователя сюда не подходят.
 @Entity(
     foreignKeys = [ForeignKey(
-        entity = RoomGithubUser::class,
+        entity = RoomGitHubUser::class,
         parentColumns = ["id"],
         childColumns = ["userId"],
         onDelete = ForeignKey.CASCADE
     )]
 )
-class RoomGithubRepository (
+data class RoomGitHubRepository (
     @PrimaryKey var id: String,
     var name: String,
-    var forksCount: Int,
+    //var forksCount: Int,
     var userId: String
 )

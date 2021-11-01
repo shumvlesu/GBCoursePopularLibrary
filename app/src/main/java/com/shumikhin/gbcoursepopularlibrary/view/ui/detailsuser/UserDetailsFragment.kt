@@ -7,10 +7,14 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shumikhin.gbcoursepopularlibrary.App
 import com.shumikhin.gbcoursepopularlibrary.databinding.FragmentUserDetailsBinding
-import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.RetrofitGitHubRepositoriesRepo
+import com.shumikhin.gbcoursepopularlibrary.model.cache.RepositoriesCache
+import com.shumikhin.gbcoursepopularlibrary.model.db.Database
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GitHubUser
 import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.presentation.detailsuser.UserDetailsPresenter
 import com.shumikhin.gbcoursepopularlibrary.retrofit.ApiHolder
+import com.shumikhin.gbcoursepopularlibrary.utils.AndroidNetworkStatus
 import com.shumikhin.gbcoursepopularlibrary.view.ui.BackButtonListener
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UserDetailsView
 import com.shumikhin.gbcoursepopularlibrary.view.ui.images.GlideImageLoader
@@ -19,7 +23,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class UserDetailsFragment(
-    private val user: GithubUser = GithubUser("DefaultUserLogin"),
+    private val user: GitHubUser = GitHubUser("DefaultUserLogin"),
     private val imageLoader: IImageLoader<ImageView>
 ) :
     MvpAppCompatFragment(),
@@ -30,6 +34,8 @@ class UserDetailsFragment(
         UserDetailsPresenter(
             App.instance.router, user,
             GithubUsersRepo(ApiHolder.apiService)
+//            RetrofitGitHubRepositoriesRepo(ApiHolder.apiService, AndroidNetworkStatus(requireContext()), RepositoriesCache(
+//                Database.getInstance()))
         )
     } //?
     private var vb: FragmentUserDetailsBinding? = null
@@ -37,13 +43,13 @@ class UserDetailsFragment(
 
     companion object {
         @JvmStatic
-        fun newInstance(user: GithubUser) = UserDetailsFragment(user, GlideImageLoader())
+        fun newInstance(user: GitHubUser) = UserDetailsFragment(user, GlideImageLoader())
     }
 
     override fun backPressed() = presenter.backPressed()
 
     //Указываем имя
-    override fun setUserName(name: GithubUser) {
+    override fun setUserName(name: GitHubUser) {
         vb?.detailsName?.text = name.id
         name.avatarUrl?.let { vb?.let { it1 -> imageLoader.loadInto(it, it1.ivAvatar) } }
     }

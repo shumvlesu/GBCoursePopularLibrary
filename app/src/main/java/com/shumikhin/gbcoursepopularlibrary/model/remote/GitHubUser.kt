@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 //генерировании всего boilerplate-кода, который требуется для работы Parcelable, что автоматически
 //избавляет от написания его вручную.
 @Parcelize
-data class GithubUser(
+data class GitHubUser(
 
     // @Expose - для сериализации GSONa
     @Expose
@@ -21,7 +21,9 @@ data class GithubUser(
     //avatar_url - это имя поля в теле json.
     // Благодаря @SerializedName программа поймет что avatar_url это avatarUrl и в обратную сторону
     @Expose
-    @SerializedName("avatar_url") val avatarUrl: String? = null
+    @SerializedName("avatar_url") val avatarUrl: String? = null,
 
+    @Expose
+    val reposUrl: String? = null
 ) : Parcelable
 
