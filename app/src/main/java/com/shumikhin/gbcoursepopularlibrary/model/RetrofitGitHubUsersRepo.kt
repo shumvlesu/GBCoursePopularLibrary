@@ -2,6 +2,7 @@ package com.shumikhin.gbcoursepopularlibrary.model
 
 import com.shumikhin.gbcoursepopularlibrary.model.cache.IUsersCache
 import com.shumikhin.gbcoursepopularlibrary.model.db.RoomGitHubUser
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GitHubUser
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IDataSource
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IGitHubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.retrofit.UserRepo
@@ -17,7 +18,7 @@ class RetrofitGitHubUsersRepo(
     private val usersCache: IUsersCache,
 ) : IGitHubUsersRepo {
 
-    override fun getUsers() = networkStatus.isOnlineSingle().flatMap { isOnline ->
+    override fun getUsers(): Single<List<GitHubUser>> = networkStatus.isOnlineSingle().flatMap { isOnline ->
         if (isOnline) {
             api.getUsers()
                 .flatMap { users ->

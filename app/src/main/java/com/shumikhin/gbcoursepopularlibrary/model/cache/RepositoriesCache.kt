@@ -23,4 +23,8 @@ class RepositoriesCache (private val db: Database): IRepositoriesCache {
     override fun getUserByLogin(text: String): RoomGitHubUser? {
         return db.userDao.findByLogin(text)
     }
+
+    override fun getUserById(text: String): RoomGitHubUser? {
+        return db.userDao.findByLogin(text)
+    }
 }

@@ -17,8 +17,8 @@ import moxy.MvpPresenter
 class UserDetailsPresenter(
     private val router: Router,
     private val user: GitHubUser,
-    //private val usersRepo: IGitHubRepositoriesRepo
-    private val usersRepo: IGitHubUsersRepo
+    private val usersRepo: IGitHubRepositoriesRepo
+    //private val usersRepo: IGitHubUsersRepo
 ) : MvpPresenter<UserDetailsView>() {
 
     class RepoListPresenter : IRepoListPresenter {
@@ -59,8 +59,8 @@ class UserDetailsPresenter(
     private var compositeDisposable = CompositeDisposable()
 
     private fun loadData() {
-        val userReposR = usersRepo.getUserRepos("/users/${user.id}/repos")
-        //val userReposR = usersRepo.getRepositories(user)
+        //val userReposR = usersRepo.getUserRepos("/users/${user.id}/repos")
+        val userReposR = usersRepo.getRepositories(user)
         userReposR
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

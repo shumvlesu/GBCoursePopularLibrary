@@ -10,4 +10,5 @@ interface IRepositoriesCache {
     fun getCachedRepositoriesByUser(user: GitHubUser): Single<List<UserRepo>>
     fun insertRepositoriesToCache(repos: List<RoomGitHubRepository>)
     fun getUserByLogin(text: String): RoomGitHubUser?
+    fun getUserById(text: String): RoomGitHubUser?
 }

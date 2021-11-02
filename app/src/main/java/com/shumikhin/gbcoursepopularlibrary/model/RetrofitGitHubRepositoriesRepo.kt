@@ -17,7 +17,7 @@ class RetrofitGitHubRepositoriesRepo(
     private val reposCache: IRepositoriesCache,
 ) : IGitHubRepositoriesRepo {
 
-    override fun getRepositories(user: GitHubUser) =
+    override fun getRepositories(user: GitHubUser) : Single<List<UserRepo>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
                 user.reposUrl?.let { url ->
@@ -25,6 +25,7 @@ class RetrofitGitHubRepositoriesRepo(
                         .flatMap { repositories ->
                             Single.fromCallable {
                                 val roomUser = user.login?.let {
+                                //val roomUser = user.id?.let {
                                     reposCache.getUserByLogin(it)
                                 } ?: throw RuntimeException("No such user in cache")
                                 val roomRepos = repositories.map {

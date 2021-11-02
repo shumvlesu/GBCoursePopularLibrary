@@ -1,6 +1,8 @@
 package com.shumikhin.gbcoursepopularlibrary.retrofit
 
 import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,6 +32,11 @@ object ApiHolder {
             //GsonConverterFactory обеспечивает преобразования ответа сервера из формата json в готовые
             //объекты, в нашем случае — в экземпляр класса GithubUser
             .addConverterFactory(GsonConverterFactory.create(gson))
+             .client(
+                 OkHttpClient.Builder()
+                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                     .build()
+             )
             .build()
             .create(IDataSource::class.java)
         //Теперь у нас есть такая заготовка в виде переменной retrofit

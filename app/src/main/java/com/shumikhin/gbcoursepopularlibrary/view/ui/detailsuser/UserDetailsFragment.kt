@@ -32,10 +32,11 @@ class UserDetailsFragment(
 
     private val presenter by moxyPresenter {
         UserDetailsPresenter(
-            App.instance.router, user,
-            GithubUsersRepo(ApiHolder.apiService)
-//            RetrofitGitHubRepositoriesRepo(ApiHolder.apiService, AndroidNetworkStatus(requireContext()), RepositoriesCache(
-//                Database.getInstance()))
+            App.instance.router,
+            user,
+            //GithubUsersRepo(ApiHolder.apiService)
+            RetrofitGitHubRepositoriesRepo(ApiHolder.apiService, AndroidNetworkStatus(requireContext()), RepositoriesCache(
+                Database.getInstance()))
         )
     } //?
     private var vb: FragmentUserDetailsBinding? = null
@@ -50,7 +51,7 @@ class UserDetailsFragment(
 
     //Указываем имя
     override fun setUserName(name: GitHubUser) {
-        vb?.detailsName?.text = name.id
+        vb?.detailsName?.text = name.login
         name.avatarUrl?.let { vb?.let { it1 -> imageLoader.loadInto(it, it1.ivAvatar) } }
     }
 

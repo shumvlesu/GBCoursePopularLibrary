@@ -75,6 +75,7 @@ dependencies {
 
     //OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
 
     //Retrofit
     //Первая строка — это библиотека. Вторая и третья — поддержка gson и RxJava

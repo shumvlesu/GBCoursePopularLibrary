@@ -55,15 +55,20 @@ class UsersPresenter(private val usersRepo: IGitHubUsersRepo, private val router
         usersListPresenter.itemClickListener = { itemView ->
             //переход на экран пользователя
             val user = usersListPresenter.users[itemView.pos]
-            router.navigateTo(AndroidScreens().details(GitHubUser(user.login)))
+            router.navigateTo(AndroidScreens().details(user))
+            //router.navigateTo(AndroidScreens().details(GitHubUser(user.login)))
         }
 
     }
 
     //загружаем даннные при помощи RxJava
     private fun loadData() {
-        usersRepo.getUsers().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        usersRepo
+            .getUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ users ->
+                usersListPresenter.users.clear()
                 usersListPresenter.users.addAll(users)
                 viewState.updateList()
             }, {
@@ -79,6 +84,7 @@ class UsersPresenter(private val usersRepo: IGitHubUsersRepo, private val router
         router.exit()
         return true
     }
+
 
     //1. navigateTo() — переход на новый экран.
     //2. newScreenChain() — сброс цепочки до корневого экрана и открытие одного нового.
