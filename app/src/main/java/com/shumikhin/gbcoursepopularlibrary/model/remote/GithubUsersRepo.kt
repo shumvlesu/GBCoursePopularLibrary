@@ -16,7 +16,7 @@ class GithubUsersRepo(private val api: IDataSource) : IGitHubUsersRepo {
 
     //fun getUsers() = ApiHolder.apiService.getUsers()
 
-    override fun getUsers(): Single<List<GithubUser>> {
+    override fun getUsers(): Single<List<GitHubUser>> {
         //return apiService.getUsers().subscribeOn(Schedulers.io())
         return apiService.getUsers()
     }

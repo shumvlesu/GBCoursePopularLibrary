@@ -2,8 +2,8 @@ package com.shumikhin.gbcoursepopularlibrary.presentation
 
 import android.util.Log
 import com.github.terrakok.cicerone.Router
-import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
-import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GitHubUser
+import com.shumikhin.gbcoursepopularlibrary.retrofit.IGitHubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.screens.AndroidScreens
 import com.shumikhin.gbcoursepopularlibrary.view.UserItemView
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UsersView
@@ -19,13 +19,13 @@ import moxy.MvpPresenter
 //● отдаём их презентеру списка;
 //● командуем View обновить список.
 //Далее оставляем заготовку слушателя клика
-class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router: Router) :
+class UsersPresenter(private val usersRepo: IGitHubUsersRepo, private val router: Router) :
     MvpPresenter<UsersView>() {
 
     //Неиспользуем у внутреннего презентера мокси так как  он все равно внутри презентера который мокси использжует.
     class UsersListPresenter : IUserListPresenter {
 
-        val users = mutableListOf<GithubUser>()
+        val users = mutableListOf<GitHubUser>()
 
         override var itemClickListener: ((UserItemView) -> Unit)? = null
 
@@ -55,15 +55,20 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
         usersListPresenter.itemClickListener = { itemView ->
             //переход на экран пользователя
             val user = usersListPresenter.users[itemView.pos]
-            router.navigateTo(AndroidScreens().details(GithubUser(user.login)))
+            router.navigateTo(AndroidScreens().details(user))
+            //router.navigateTo(AndroidScreens().details(GitHubUser(user.login)))
         }
 
     }
 
     //загружаем даннные при помощи RxJava
     private fun loadData() {
-        usersRepo.getUsers().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        usersRepo
+            .getUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ users ->
+                usersListPresenter.users.clear()
                 usersListPresenter.users.addAll(users)
                 viewState.updateList()
             }, {
@@ -79,6 +84,7 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
         router.exit()
         return true
     }
+
 
     //1. navigateTo() — переход на новый экран.
     //2. newScreenChain() — сброс цепочки до корневого экрана и открытие одного нового.

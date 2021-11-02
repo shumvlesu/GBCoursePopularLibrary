@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 
 //класс RoomGithubUser, который представляет таблицу пользователей
 @Entity
-class RoomGithubUser (
+class RoomGitHubUser (
     @PrimaryKey var id: String,
     var login: String,
     var avatarUrl: String,
-    //var reposUrl: String
+    var reposUrl: String
 )

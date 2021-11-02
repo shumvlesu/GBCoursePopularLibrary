@@ -2,20 +2,23 @@ package com.shumikhin.gbcoursepopularlibrary.presentation.detailsuser
 
 import android.util.Log
 import com.github.terrakok.cicerone.Router
-import com.shumikhin.gbcoursepopularlibrary.model.remote.GithubUser
+import com.shumikhin.gbcoursepopularlibrary.model.IGitHubRepositoriesRepo
+import com.shumikhin.gbcoursepopularlibrary.model.remote.GitHubUser
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IGitHubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.retrofit.UserRepo
 import com.shumikhin.gbcoursepopularlibrary.view.ui.UserDetailsView
 import com.shumikhin.gbcoursepopularlibrary.view.ui.detailsuser.IRepoListPresenter
 import com.shumikhin.gbcoursepopularlibrary.view.ui.detailsuser.RepoItemView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 
 class UserDetailsPresenter(
     private val router: Router,
-    private val user: GithubUser,
-    private val usersRepo: IGitHubUsersRepo
+    private val user: GitHubUser,
+    private val usersRepo: IGitHubRepositoriesRepo
+    //private val usersRepo: IGitHubUsersRepo
 ) : MvpPresenter<UserDetailsView>() {
 
     class RepoListPresenter : IRepoListPresenter {
@@ -53,9 +56,11 @@ class UserDetailsPresenter(
 
 
     val repoListPresenter = RepoListPresenter()
+    private var compositeDisposable = CompositeDisposable()
 
     private fun loadData() {
-        val userReposR = usersRepo.getUserRepos("/users/${user.id}/repos")
+        //val userReposR = usersRepo.getUserRepos("/users/${user.id}/repos")
+        val userReposR = usersRepo.getRepositories(user)
         userReposR
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 //версия базы. Версионирование используется для обеспечения работы механизма миграций, но о них
 //поговорим позже.
 @Database(
-    entities = [RoomGithubUser::class, RoomGithubRepository::class],
+    entities = [RoomGitHubUser::class, RoomGitHubRepository::class],
     version = 1
 )
 // Database: точка доступа к соединению с базой данных.

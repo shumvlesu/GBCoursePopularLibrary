@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shumikhin.gbcoursepopularlibrary.databinding.ItemRepoBinding
-import com.shumikhin.gbcoursepopularlibrary.presentation.IListPresenter
-import com.shumikhin.gbcoursepopularlibrary.presentation.IUserListPresenter
 
 class ReposRVAdapter (val presenter: IRepoListPresenter): RecyclerView.Adapter<ReposRVAdapter.ViewHolderRepo>() {
 
