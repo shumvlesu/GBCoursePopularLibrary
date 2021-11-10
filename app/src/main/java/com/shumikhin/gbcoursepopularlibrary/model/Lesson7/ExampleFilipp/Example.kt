@@ -19,7 +19,7 @@ class ExampleModule{
 
     //Предоставляю зависимость
     @Provides
-    fun a(): String{
+    fun a(): String{//метод долен иметь тот же тип что и иньекция (@Inject) что мы хотим получить.
 
     }
 
