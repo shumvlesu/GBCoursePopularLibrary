@@ -34,11 +34,22 @@ class App : Application() {
         //Инициализируем компонент
         //DaggerExampleComponent не появится пока не сбилдится проект (даггер должен сгенерировать свой код)
         val exampleComponent = DaggerExampleComponent.builder().build()
+
         val example = Example()
+        val example2 = Example()
+        val example3 = Example()
+
         exampleComponent.inject(example)
+        exampleComponent.inject(example2)
+        exampleComponent.inject(example3)
 
-        Log.d("DP_Example", example.a)
-
+        Log.d("DP_Example", "${example.a.exampleField}")
+        Log.d("DP_Example", "${example2.a.exampleField}")
+        Log.d("DP_Example", "${example3.a.exampleField}")
+        //Благодаря аннотации @Singleton у нас не создается новый объект класса ExampleDependency а передается тот же уже созданный объект
+        //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
+        //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
+        //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
 
     }
 
