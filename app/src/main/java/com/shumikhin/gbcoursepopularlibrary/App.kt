@@ -32,7 +32,7 @@ class App : Application() {
 
 
         //Инициализируем компонент
-        //DaggerExampleComponent не появится пока не сбидится проект (даггер должен сгенерировать свой код)
+        //DaggerExampleComponent не появится пока не сбилдится проект (даггер должен сгенерировать свой код)
         val exampleComponent = DaggerExampleComponent.builder().build()
         val example = Example()
         exampleComponent.inject(example)
