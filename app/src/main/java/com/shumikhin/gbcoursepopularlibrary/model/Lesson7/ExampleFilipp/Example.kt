@@ -32,10 +32,6 @@ class ExampleModule {
         return ExampleDependency()
     }
 
-//    fun exampleProvides2(): String {
-//        return "CDE"
-//    }
-
 }
 
 //2)Компонент который мы заинжектим в класс Example в App
