@@ -5,7 +5,9 @@ import android.util.Log
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.DaggerExampleComponent
+import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.DaggerExampleComponent2
 import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.Example
+import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.Example2
 import com.shumikhin.gbcoursepopularlibrary.model.db.Database
 
 
@@ -50,6 +52,14 @@ class App : Application() {
         //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
         //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
         //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
+
+
+
+        val exampleComponent2 = DaggerExampleComponent2.builder().build()
+        val exampleQualifier = Example2()
+        exampleComponent2.inject(exampleQualifier)
+        Log.d("DP_Example2", "${exampleQualifier.abc}")
+        Log.d("DP_Example2", "${exampleQualifier.cde}")
 
     }
 
