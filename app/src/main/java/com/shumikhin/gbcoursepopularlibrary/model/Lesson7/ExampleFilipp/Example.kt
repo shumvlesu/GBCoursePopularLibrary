@@ -6,7 +6,7 @@ import dagger.Provides
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
+//Пример с вызовом внедренной зависимости прописан в App.kt , методе onCreate
 class Example {
 
     //вставь сюда зависимость
