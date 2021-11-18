@@ -4,12 +4,11 @@ import android.app.Application
 import android.util.Log
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
-import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.DaggerExampleComponent
-import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.DaggerExampleComponent2
-import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.Example
-import com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp.Example2
+import com.shumikhin.gbcoursepopularlibrary.di.modules.ExampleFilipp.DaggerExampleComponent
+import com.shumikhin.gbcoursepopularlibrary.di.modules.ExampleFilipp.DaggerExampleComponent2
+import com.shumikhin.gbcoursepopularlibrary.di.modules.ExampleFilipp.Example
+import com.shumikhin.gbcoursepopularlibrary.di.modules.ExampleFilipp.Example2
 import com.shumikhin.gbcoursepopularlibrary.model.db.Database
-
 
 
 //App нужен для чичероне и для синг активити
@@ -52,7 +51,6 @@ class App : Application() {
 //        //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
 //        //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
 //        //2021-11-15 16:39:27.438 6923-6923/com.shumikhin.gbcoursepopularlibrary D/DP_Example: 0.04127815502235199
-//
 //
 //
 //        val exampleComponent2 = DaggerExampleComponent2.builder().build()

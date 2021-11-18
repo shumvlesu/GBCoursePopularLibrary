@@ -1,4 +1,4 @@
-package com.shumikhin.gbcoursepopularlibrary.model.Lesson7.ExampleFilipp
+package com.shumikhin.gbcoursepopularlibrary.di.modules.ExampleFilipp
 
 import dagger.Component
 import dagger.Module
