@@ -19,12 +19,14 @@ class App : Application() {
         lateinit var instance: App
     }
 
+
+    //С внедрением dagger потеряло актуальность
     //Временно до даггера положим это тут
     //Инициализируем чичероне
-    private val cicerone: Cicerone<Router> by lazy { Cicerone.create() }
+    //private val cicerone: Cicerone<Router> by lazy { Cicerone.create() }
 
-    val navigatorHolder get() = cicerone.getNavigatorHolder()
-    val router get() = cicerone.router
+    //val navigatorHolder get() = cicerone.getNavigatorHolder()
+    //val router get() = cicerone.router
 
     override fun onCreate() {
         super.onCreate()
