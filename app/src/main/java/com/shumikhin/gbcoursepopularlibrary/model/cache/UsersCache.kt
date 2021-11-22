@@ -5,7 +5,7 @@ import com.shumikhin.gbcoursepopularlibrary.model.db.RoomGitHubUser
 import com.shumikhin.gbcoursepopularlibrary.model.remote.GitHubUser
 import io.reactivex.rxjava3.core.Single
 
-class UsersCache(private val db: Database): IUsersCache {
+class UsersCache(private val db: Database): IGithubUsersCache {
 
     override fun getCachedUsers(): Single<List<GitHubUser>> =
         Single.fromCallable {

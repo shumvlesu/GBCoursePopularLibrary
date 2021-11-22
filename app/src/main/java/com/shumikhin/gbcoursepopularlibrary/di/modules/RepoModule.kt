@@ -1,6 +1,7 @@
 package com.shumikhin.gbcoursepopularlibrary.di.modules
 
 import com.shumikhin.gbcoursepopularlibrary.model.RetrofitGitHubUsersRepo
+import com.shumikhin.gbcoursepopularlibrary.model.cache.IGithubUsersCache
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IDataSource
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IGitHubUsersRepo
 import com.shumikhin.gbcoursepopularlibrary.utils.INetworkStatus

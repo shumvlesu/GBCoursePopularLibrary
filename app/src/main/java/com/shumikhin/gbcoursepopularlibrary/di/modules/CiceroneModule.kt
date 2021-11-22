@@ -18,10 +18,12 @@ class CiceroneModule {
     @Provides
     fun cicerone(): Cicerone<Router> = cicerone
 
+    //Холдер для Активити
     @Singleton
     @Provides
     fun navigatorHolder(): NavigatorHolder = cicerone.getNavigatorHolder()
 
+    //Роутер для презентеров
     @Singleton
     @Provides
     fun router(): Router = cicerone.router

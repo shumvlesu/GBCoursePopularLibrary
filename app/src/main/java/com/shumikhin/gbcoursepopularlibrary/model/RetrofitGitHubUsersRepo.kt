@@ -1,6 +1,6 @@
 package com.shumikhin.gbcoursepopularlibrary.model
 
-import com.shumikhin.gbcoursepopularlibrary.model.cache.IUsersCache
+import com.shumikhin.gbcoursepopularlibrary.model.cache.IGithubUsersCache
 import com.shumikhin.gbcoursepopularlibrary.model.db.RoomGitHubUser
 import com.shumikhin.gbcoursepopularlibrary.model.remote.GitHubUser
 import com.shumikhin.gbcoursepopularlibrary.retrofit.IDataSource
@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class RetrofitGitHubUsersRepo(
     private val api: IDataSource,
     private val networkStatus: INetworkStatus,
-    private val usersCache: IUsersCache,
+    private val usersCache: IGithubUsersCache,
 ) : IGitHubUsersRepo {
 
     override fun getUsers(): Single<List<GitHubUser>> = networkStatus.isOnlineSingle().flatMap { isOnline ->
